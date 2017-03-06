@@ -1,0 +1,16 @@
+﻿@model Character
+@using ClanManager.Models
+@{
+    ViewBag.Title = "index";
+}
+
+@using (Html.BeginForm())
+{
+<p class="h2">Character Name</p>
+<div class="form-login">
+    @Html.TextBoxFor(u => u.Name, new { @class = "form-login", placeholder = "Name" })
+    @Html.ValidationMessageFor(u => u.Name)
+</div>
+<input type="submit" value="Create" class="button-login" />
+<h1>test Baka</h1>
+}
