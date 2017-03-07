@@ -1,29 +1,24 @@
 ﻿@font-face {
-    font-family: 'baka';
-    src: url('fonts/baka.ttf') format('truetype');
+    font-family: 'Oswald-Regular';
+    src: url('../fonts/Oswald-Regular.ttf') format('truetype');
 }
-/* latin-ext */
 @font-face {
-  font-family: 'Chelsea Market';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Chelsea Market'), local('ChelseaMarket-Regular'), url(http://fonts.gstatic.com/s/chelseamarket/v4/qSdzwh2A4BbNemy78sJLfNpTH3z621gHHpxD-3b7j0o.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+    font-family: 'Quattrocento-Regular';
+    src: url('../fonts/Quattrocento-Regular.otf') format('opentype');
 }
-/* latin */
-@font-face {
-  font-family: 'Chelsea Market'; 
-  font-style: normal;
-  font-weight: 400;
-  src: local('Chelsea Market'), local('ChelseaMarket-Regular'), url(http://fonts.gstatic.com/s/chelseamarket/v4/qSdzwh2A4BbNemy78sJLfBRWMfMQaj_KSrIuqJtfm2o.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
-}
-
 
 body {
     padding-bottom: 20px;
+    background: #111111;
 }
 
+p {
+    color: white;
+    font-size: 18px;
+    line-height: 32px;
+    font-family: Quattrocento-Regular;
+    letter-spacing: 0px;
+}
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -37,13 +32,81 @@ textarea {
     max-width: 280px;
 }
 
-h1{
-    font-size: 18em;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+.container-top {
+    width: 100%;
+    background-image: url('../images/banner8.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 540px;
+    margin-top: 80px;
+    overflow: hidden;
+}
+.title-text {
+    text-align: center;
+    width: 100%;
+    margin-top: 150px;
+    cursor: default;
 }
 
-.h2{
-    font-size: 20px;
-    font-weight: bold;
-    color: red;
+h1{
+    line-height: 60px;
+    letter-spacing: 0px;
+    font-size: 82px;
+    font-family: Oswald-Regular;
+    text-transform: uppercase;
+    color: white;
+    text-shadow: 1px 1px 3px #000000, -1px -1px 3px #000000, 1px -1px 3px #000000, -1px 1px 3px #000000;
+}
+h2{
+    line-height: 32px;
+    letter-spacing: 0px;
+    font-size: 42px;
+    font-family: Oswald-Regular;
+    text-transform: uppercase;
+    color: white;
+    text-shadow: 1px 1px 3px #000000, -1px -1px 3px #000000, 1px -1px 3px #000000, -1px 1px 3px #000000;
+}
+hr.style11 {
+    width: 470px;
+    box-shadow: 1px 1px 1px #000000, -1px -1px 1px #000000, 1px -1px 1px #000000, -1px 1px 1px #000000;
+  background: white;
+  height: 2px; 
+}
+.container-main{
+
+}
+
+.search {
+    text-align: left;
+    text-indent: 54px;
+    width: 1500px;
+    height: 56px;
+    font-size: 40px;
+    text-shadow: 1px 1px 1px #000000, -1px -1px 1px #000000, 1px -1px 1px #000000, -1px 1px 1px #000000;
+    display: inline-block;
+    font-family: Oswald-Regular;
+    background: none;
+    border: none;
+    color: white;
+    text-transform: uppercase;
+    cursor: pointer;
+    background-image: url('../images/search-512.png');
+    background-repeat: no-repeat;
+    background-size: 48px, 48px;
+    background-position-y: 4px;
+      cursor: text;
+      display: inline-block;
+      width: 480px;
+      max-width: 475px;
+      margin-top: -8px;
+      margin-bottom: -14px;
+}
+
+.search:focus:hover {
+  cursor: text;
+}
+
+.search:focus {
+  z-index: 1;
+  cursor: text;
 }

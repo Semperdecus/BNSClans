@@ -6,11 +6,21 @@
 
 @using (Html.BeginForm())
 {
-<p class="h2">Character Name</p>
-<div class="form-login">
-    @Html.TextBoxFor(u => u.Name, new { @class = "form-login", placeholder = "Name" })
-    @Html.ValidationMessageFor(u => u.Name)
+
+<div class="container-top">
+    <div class="title-text">
+        <h1>Search a clan</h1>
+        <hr class="style11" />
+        @Html.TextBoxFor(u => u.Name, new { @class = "search", placeholder = "Enter clanname here", maxlength = "24" })
+        @Html.ValidationMessageFor(u => u.Name)
+        <hr class="style11" />
+
+    </div>
 </div>
-<input type="submit" value="Create" class="button-login" />
-<h1>test Baka</h1>
+    <div class="container">
+        <h2>What is BNSClans?</h2>
+        <hr />
+        <p>BNSClans is a site made to help players organize their clans. We read of your stats, gear, class and more to determine optimal raid groups, an overview of your members and much more.</p>
+    </div>
+
 }
