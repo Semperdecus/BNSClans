@@ -18,8 +18,9 @@ namespace ClanManager.Controllers
         [HttpPost]
         public ActionResult Index(Clan clan)
         {
-            clan.Members = Data.getCharactersFromClan(clan.Name);
-            Data.selectedClan = new Clan(clan.Name, clan.Members);
+            Data.selectedClan = new Clan();
+            //clan.Members = Data.getCharactersFromClan(clan.Name);
+            //Data.selectedClan = new Clan(clan.Name, clan.Members);
             return View();
         }
     }

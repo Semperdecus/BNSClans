@@ -39,9 +39,13 @@ namespace ClanManager.Models
             double result = 0.00;
             foreach (Character c in members)
             {
-                if (c.Level.Contains("Level 50 • Level "))
+                if (c.Level != null && c.Level.Contains("Level 50 • Level ") )
                 {
                     c.Level = c.Level.Replace("Level 50 • Level ", "");
+                }
+                else
+                {
+                    return result;
                 }
                 result += Convert.ToDouble(c.Level);
             }

@@ -13,6 +13,7 @@ namespace ClanManager.Models
     public class Data
     {
         public static Clan selectedClan = new Clan();
+        public static List<Character> dynamicCharacterList = new List<Character>();
         private static readonly string DatabaseString = "Data Source=TERROG;Initial catalog=BNSCharacters;Integrated Security=true";
 
         public static string url = "http://eu-bns.ncsoft.com/ingame/bs/character/profile?c="; //get link
@@ -138,7 +139,6 @@ namespace ClanManager.Models
         //    catch { return null; }
         //}
 
-
         public static SqlConnection Connection
         {
             get
@@ -172,6 +172,7 @@ namespace ClanManager.Models
                             //Compare database with F2 page and check if still in same clan
                             if (databaseCharacter.Clan.ToLower() == clanname.ToLower())
                             {
+                                Data.selectedClan.Members.Add(databaseCharacter);
                                 //add to return list if database clan and F2 clan are the same
                                 returnList.Add(databaseCharacter);
                             }

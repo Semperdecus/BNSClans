@@ -20,7 +20,7 @@
     {
         <div class="row">
             <div class="col-md-6">
-                <p>Total Members: @Data.selectedClan.Members.Count() </p>
+                <p>Total Members: <span id="memberCount"></span> </p>
                 <p>Average Attack Power: @Math.Round(Data.selectedClan.AverageAP(Data.selectedClan.Members), 2) </p>
                 <p>Average Hongmoon Level: @Math.Round(Data.selectedClan.AverageHMLevel(Data.selectedClan.Members), 2) </p>
                 <p>Average Score: @Math.Round(Data.selectedClan.AverageScore(Data.selectedClan.Members), 2) </p>
@@ -51,7 +51,8 @@
                 <th>Critical</th>
                 <th>Score</th>
             </tr>
-            @foreach (Character c in Data.selectedClan.Members)
+            </table>
+            @*@foreach (Character c in Data.dynamicCharacterList)
             {
                 try
                 {
@@ -83,12 +84,17 @@
                 {
                     <tbody>No data found.</tbody>
                 }
-            }
-       </table>   
+            }*@
+            <div id="result"></div>
+
+       @*</table>*@
     }
     catch
     {
-
+        <p>error</p>
     }
 
 </div>
+
+@section scripts{
+}
