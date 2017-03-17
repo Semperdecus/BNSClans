@@ -18,7 +18,7 @@ namespace ClanManager
 
         public void ProcessRequest(HttpContext context)
         {
-            HttpResponse response = context.Response;
+            HttpResponse response = context.Response; 
             response.BufferOutput = false; 
             response.ContentType = "text/html";
 
