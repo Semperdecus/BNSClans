@@ -27,11 +27,11 @@ nav{
 }
 
 td, tr{
-    color: black;
+    color: #f6f3f3;
 }
 
 p {
-    color: black;
+    color: #f6f3f3;
     font-size: 18px;
     line-height: 32px;
     font-family: Quattrocento-Regular;
@@ -40,18 +40,19 @@ p {
 }
 
 .nav-left{
-    width: 200px;
+    width: 240px;
     height: 100%;
-    background: #e7e7ee;
+    background: #1c1b1b;
     position: fixed;
     top: 0px;
     left: 0px;
+    z-index: 101;
 }
 
 .nav-logo {
     width: 100%;
     height: 150px;
-    background-image: url('../images/website temp logo.png');
+    background-image: url('../images/website temp logo - invert.png');
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -59,46 +60,51 @@ p {
 .nav-title{
     width: 100%;
     background: transparent;
-    font-family: 'Segoe UI';
-    font-weight: lighter;
-    text-transform: uppercase;
-    padding-top: 16px;
-    padding-bottom: 16px;
+    font-family: Helvetica;
+    font-size: 16px;
+    letter-spacing: 1px;
+    font-weight: normal;
+    text-transform:capitalize;
+    /*font-variant:small-caps;*/
+    padding-top: 14px;
+    padding-bottom: 14px;
     text-indent: 10%;
     transition: 0.3s cubic-bezier(0.825, 0.005, 0.175, 0.995);
-    color: #4e4e4e;
+    color: #bdbdbd;
 }
 
 .nav-title:hover{
     width: 100%;
-    background: #f6f6f6;
+    background: #404040;
     text-indent: 12%;
-    color: black;
+    color: white;
     cursor: pointer;
+    color: #f6f3f3;
 }
 
 .active{
-    background: #fff666;
+    color: #f6f3f3;
+    background: #dd5858;
     cursor: default;
 }
 
 .active:hover{
-    background: #fff666;
+    color: #f6f3f3;
+    background: #dd5858;
     cursor: default;
     text-indent: 10%;
 }
 
 .container-splash {
     position: absolute;
-    margin-left: 200px;
-    width: calc(100% - 200px);
+    margin-left: 240px;
+    width: calc(100% - 240px);
     height: 100%;
     background-image: url('../images/theVideoGameGallery_12488_4993x3076.jpg');
     background-image: url('../images/theVideoGameGallery_12497_5374x2856.jpg');
     background-image: url('../images/theVideoGameGallery_12494_2500x1553.jpg');
     background-image: url('../images/theVideoGameGallery_12492_2500x1572.jpg');
     background-image: url('../images/theVideoGameGallery_12491_3000x1643.jpg');
-    background-image: url('../images/theVideoGameGallery_12489_4961x2976.jpg');
     background-size: cover;
     background-position: bottom;
     z-index: 0;
@@ -106,9 +112,9 @@ p {
 
 .copyright-container {
     position:absolute;
-    bottom: 1px;
-    margin-left: 15px;
-    margin-right: 5px;
+    bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
     text-align: center;
 }
 
@@ -116,16 +122,19 @@ p {
     color: #f6f3f3;
     font-size: 11px;
     line-height: 12px;
-    font-family: 'Segoe UI';
+    font-family: Helvetica;
     letter-spacing: 0px;
     text-shadow: 1px 1px 3px #000000, -1px -1px 3px #000000, 1px -1px 3px #000000, -1px 1px 3px #000000;
 }
 .inside-border {
-    width: calc(100% - 200px);
-    height: calc(100% + 5px);
-    margin-top: -5px;
-    box-shadow:inset 5px 2px 1px 1px #e7e7ee;
+    margin-left: 0.5%;
+    margin-top: 0.5%;
+    width: 99%;
+    height: 98%;
+    box-shadow:inset 0px 0px 0px 4px #121112;
 }
+
+
 
 /* Set padding to keep content from hitting the edges */
 .body-content {

@@ -3,27 +3,36 @@
 @{
     ViewBag.Title = "index";
 }
+<div class="nav-left">
+    <div class="nav-logo"></div>
+    <div class="nav-title active">home</div>
+    <div class="nav-title">Raids</div>
+    <div class="nav-title">Activity</div>
+    <div class="nav-title">LeaderBoards</div>
+    <div class="nav-title">about</div>
 
-@using (Html.BeginForm())
-{
-
-<div class="container-top">
-    <div class="title-text">
-        <h1>Search a clan</h1>
-        <hr class="style11" />
-        @Html.TextBoxFor(u => u.Name, new { @class = "search", placeholder = "Enter clanname here", maxlength = "24" })
-        @Html.ValidationMessageFor(u => u.Name)
-        <hr class="style11" />
-
-    </div>
 </div>
-<div class="container">
+<div class="container-splash inside-border">
+        @using (Html.BeginForm())
+        {
+            <div class="title-text">
+                <h1>Search a clan</h1>
+                <hr class="style11" />
+                @Html.TextBoxFor(u => u.Name, new { @class = "search", placeholder = "Enter clanname here", maxlength = "24" })
+                @Html.ValidationMessageFor(u => u.Name)
+                <hr class="style11" />
+            </div>
+        }
+        <div class="copyright-container"><p class="copyright">© 2016 NCSOFT Corporation. All rights reserved. NCSOFT, the interlocking NC logo, Aion, Lineage II, Blade & Soul, and all associated logos and designs are trademarks or registered trademarks of NCSOFT Corporation. All other trademarks are the property of their respective owners.</p></div>
+</div>
+
+
+
+@*<div class="container">
     <h2>What is BNSClans?</h2>
     <p>BNSClans is a site made to help players organize their clans. We read of your stats, gear, class and more to determine optimal raid groups, an overview of your members and much more.</p>
     <br />
     <h2>How does it work?</h2>
     <p>The first step is collecting player data. You need to enter the names of your members and with this information we can gather all data needed through the F2 page.</p>
     <p>Once all data has been collected you can easily create organize raid groups based on your clan list or track the activity in your clan.</p>
-
-</div>
-}
+</div>*@
