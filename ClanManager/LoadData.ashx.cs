@@ -9,7 +9,8 @@ using System.Web;
 namespace ClanManager
 {
     /// <summary>
-    /// Summary description for LoadData
+    /// LoadData reads the data for characters in a clan. Using data from an external website.
+    /// Params: Clanname
     /// </summary>
     public class LoadData : IHttpHandler
     {
@@ -19,19 +20,26 @@ namespace ClanManager
         public void ProcessRequest(HttpContext context)
         {
             HttpResponse response = context.Response; 
-            response.BufferOutput = false; 
-            response.ContentType = "text/html";
 
+            //the number returned from database to see how many clan members are in the clan. 
+            //Passed on through script.js since for loop is happening in there so we need this var in both places.
+            int a = Convert.ToInt32(context.Request["value"]);
 
-            //Data.selectedClan.Members.Clear();
-            
+            //this number keeps track of current row that needs to be processed.
+            Data.rowNumber += 1;
+            //query to check clan and number to return. 
+            string query = @"SELECT * FROM (
+                                SELECT ROW_NUMBER() OVER (ORDER BY name) AS RowNr, *
+                                FROM character
+	                            WHERE LOWER(clan) = @clanname
+                            ) sub
+                            WHERE sub.RowNr = @rowNumber";
 
-            //query to check if searched clan exists within the database.
-            string query = "SELECT name FROM character WHERE LOWER(clan) = @clanname";
             using (SqlConnection conn = Data.Connection)
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
                 cmd.Parameters.Add(new SqlParameter("clanname", Data.selectedClan.Name.ToLower()));
+                cmd.Parameters.Add(new SqlParameter("rowNumber", a));
 
                 //conn.Open();
                 using (SqlDataReader rdr = cmd.ExecuteReader())
@@ -48,13 +56,22 @@ namespace ClanManager
                             {
                                 Data.selectedClan.Members.Add(databaseCharacter);
 
+                                //write row number correctly
+                                string returnRowNumber = "";
+                                if (a < 10)
+                                {
+                                    returnRowNumber = "0" + a;
+                                }
+                                else
+                                {
+                                    returnRowNumber = a.ToString();
+                                }
                                 //write row to page
-                                row = "<table class=\"table\"><tr><td> " +
+                                row = "<tr><td class=\"number\"> " +
+                                                    returnRowNumber +
+                                                "</td><td> " +
                                                     databaseCharacter.Name +
                                                 @"</td>
-                                                <td> " +
-                                                    databaseCharacter.Clan +
-                                                @"</td> 
                                                 <td> " +
                                                     databaseCharacter.Level +
                                                 @"</td>
@@ -69,10 +86,8 @@ namespace ClanManager
                                                 @"</td>
                                                 <td> " +
                                                     databaseCharacter.DPS.ToString() +
-                                                @"</td></tr></table>";
+                                                @"</td></tr>";
                                 response.Write(row);
-                                response.Flush();
-                                response.Clear();
                             }
                             else
                             {
@@ -81,7 +96,6 @@ namespace ClanManager
                         }
                         catch
                         {
-                            //throw new Exception("Error collecting data");
                         }
                     }
                 }

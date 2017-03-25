@@ -5,19 +5,10 @@
 }
 
 <div class="container">
-
-    @using (Html.BeginForm())
-    {
-        <h2>Clan Name</h2>
-        <div class="form-login">
-            @Html.TextBoxFor(u => u.Name, new { @class = "form-login", placeholder = "Name" })
-            @Html.ValidationMessageFor(u => u.Name)
-        </div>
-        <input type="submit" value="Create" class="button-login" />
-    }
-
     @try
     {
+        <h2>@Data.selectedClan.Name</h2>
+        <hr class="style12" />
         <div class="row">
             <div class="col-md-6">
                 <p>Total Members: <span id="memberCount"></span> </p>
@@ -40,61 +31,29 @@
                 <p>Warlocks: @Data.selectedClan.ClassAmount(Data.selectedClan.Members, "Warlock")</p>
             </div>
         </div>
+        <table id="memberTable" class="tablesorter table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Level</th>
+                    <th>Hitpoints</th>
+                    <th>Attack Power</th>
+                    <th>Critical</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
 
-        <table class="table">
-            <tr>
-                <th>Name</th>
-                <th>Clan</th>
-                <th>Level</th>
-                <th>Hitpoints</th>
-                <th>Attack Power</th>
-                <th>Critical</th>
-                <th>Score</th>
-            </tr>
-            </table>
-            @*@foreach (Character c in Data.dynamicCharacterList)
-            {
-                try
-                {
-                    <tr>
-                        <td>
-                            @c.Name
-                        </td>
-                        <td>
-                            @c.Clan
-                        </td>
-                        <td>
-                            @c.Level
-                        </td>
-                        <td>
-                            @c.HP
-                        </td>
-                        <td>
-                            @c.AP
-                        </td>
-                        <td>
-                            @c.CriticalHit
-                        </td>
-                        <td>
-                            @c.DPS.ToString()
-                        </td>
-                    </tr>
-                }
-                catch
-                {
-                    <tbody>No data found.</tbody>
-                }
-            }*@
-            <div id="result"></div>
-
-       @*</table>*@
+        </table>
     }
     catch
     {
         <p>error</p>
     }
-
 </div>
 
 @section scripts{
+<script src="~/scripts/scripts.js"></script>
+<script></script>
 }

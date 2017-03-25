@@ -12,6 +12,7 @@ namespace ClanManager.Models
 {
     public class Data
     {
+        public static int rowNumber = 0;
         public static Clan selectedClan = new Clan();
         public static List<Character> dynamicCharacterList = new List<Character>();
         private static readonly string DatabaseString = "Data Source=TERROG;Initial catalog=BNSCharacters;Integrated Security=true";

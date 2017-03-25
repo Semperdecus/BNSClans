@@ -166,15 +166,22 @@
     <Content Include="fonts\Oswald-Regular.ttf" />
     <Content Include="fonts\Quattrocento-Regular.otf" />
     <Content Include="LoadData.ashx" />
-    <Content Include="LoadMemberCount.ashx" />
+    <Content Include="App_Code\LoadMemberCount.ashx" />
+    <Content Include="ReturnRows.ashx" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
+    <Content Include="scripts\jquery.tablesorter.min.js" />
+    <Content Include="scripts\jquery.tablesorter.pager.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
     <Content Include="scripts\scripts.js" />
+    <Content Include="scripts\tablesort.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ReturnRows.ashx.cs">
+      <DependentUpon>ReturnRows.ashx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ClanController.cs" />
@@ -186,7 +193,7 @@
     <Compile Include="LoadData.ashx.cs">
       <DependentUpon>LoadData.ashx</DependentUpon>
     </Compile>
-    <Compile Include="LoadMemberCount.ashx.cs">
+    <Compile Include="App_Code\LoadMemberCount.ashx.cs">
       <DependentUpon>LoadMemberCount.ashx</DependentUpon>
     </Compile>
     <Compile Include="Models\Character.cs" />
@@ -206,6 +213,7 @@
     <Content Include="scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Clan\Index.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

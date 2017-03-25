@@ -10,33 +10,82 @@
 body {
     padding-bottom: 20px;
     background: #f6f6f6;
-
+    overflow: hidden;
 }
 
-nav ul, li {
-    list-style: none;
-    margin: 0px;
+a:hover{
+    text-decoration: none;
 }
 
-nav{
-    margin: 0;
-    padding: 0;
-    border: 0;
-    outline: 0;
-    background: transparent;
-}
-
-td, tr{
-    color: black;
-}
-
-p {
-    color: black;
-    font-size: 18px;
-    line-height: 32px;
-    font-family: Quattrocento-Regular;
+h2 {
+    color: #4e4e4e;
+    font-size: 36px;
+    line-height: 10px;
+    font-family: Oswald-Regular;
+    font-weight: normal;
     letter-spacing: 0px;
-    text-shadow: 1px 1px 3px #000000, -1px -1px 3px #000000, 1px -1px 3px #000000, -1px 1px 3px #000000;
+    font-weight: normal;
+    text-transform: capitalize;
+}
+table {
+    margin-left: -18px;
+}
+th.headerSortUp:after { 
+    font-size: 12px;
+    content: '▲';
+    margin-left: 2px;
+    margin-top: 2px;
+    position: absolute
+} 
+th.headerSortDown:after { 
+    font-size: 12px;
+    content: '▼';
+    margin-left: 2px;
+    margin-top: 2px;
+    position: absolute
+} 
+td, tr{
+    color: #4e4e4e;
+    font-size: 14px;
+    line-height: 22px;
+    font-family: 'Segoe UI';
+    font-weight: normal;
+    letter-spacing: 0px;
+    border: none !important;
+    padding-left: 10px;
+    transition: 0.1s cubic-bezier(0.825, 0.005, 0.175, 0.995);
+}
+
+.number{
+    font-size: 11px;
+    color: #4e4e4e;
+    -ms-transform: rotate(90deg); /* IE 9 */
+    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+    transform: rotate(90deg);
+    position: absolute;
+    margin-top: 2px;
+    left: -8px;
+}
+tbody tr:hover{
+    background-color: #e7e7ee;
+}
+
+th{
+    color: #4e4e4e;
+    font-size: 14px;
+    line-height: 22px;
+    font-family: 'Segoe UI';
+    font-weight: bolder;
+    letter-spacing: 0px;
+    border: none !important;
+}
+p {
+    color: #4e4e4e;
+    font-size: 14px;
+    line-height: 22px;
+    font-family: 'Segoe UI';
+    font-weight: normal;
+    letter-spacing: 0px;
 }
 
 .nav-left{
@@ -60,7 +109,7 @@ p {
     width: 100%;
     background: transparent;
     font-family: 'Segoe UI';
-    font-weight: lighter;
+    font-weight: normal;
     text-transform: uppercase;
     padding-top: 16px;
     padding-bottom: 16px;
@@ -86,6 +135,19 @@ p {
     background: #fff666;
     cursor: default;
     text-indent: 10%;
+}
+
+.container {
+    position: absolute;
+    margin-left: 200px;
+    width: calc(100% - 166px);
+    max-width: calc(100% - 166px);
+    height: 100%;
+    z-index: 1;
+    -ms-overflow-style: none;
+    overflow:scroll;
+    overflow-x:auto;
+    right: -34px;
 }
 
 .container-splash {
@@ -165,25 +227,18 @@ h1{
     color: white;
     text-shadow: 1px 1px 3px #000000, -1px -1px 3px #000000, 1px -1px 3px #000000, -1px 1px 3px #000000;
 }
-h2{
-    line-height: 32px;
-    letter-spacing: 0px;
-    font-size: 42px;
-    font-family: Oswald-Regular;
-    text-transform: uppercase;
-    color: white;
-    text-shadow: 1px 1px 3px #000000, -1px -1px 3px #000000, 1px -1px 3px #000000, -1px 1px 3px #000000;
-}
 hr.style11 {
     width: 470px;
     box-shadow: 1px 1px 0px #000000, -1px -1px 0px #000000, 1px -1px 0px #000000, -1px 1px 1px #000000;
-  background: white;
-  height: 2px; 
+    background: white;
+    height: 2px; 
 }
-.container-main{
-
+hr.style12 {
+    width: 300px;
+    background: #e7e7ee;
+    height: 2px; 
+    margin-left: 0px;
 }
-
 .search {
     text-align: left;
     text-indent: 54px;

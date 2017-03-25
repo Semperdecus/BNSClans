@@ -3,27 +3,19 @@
 @{
     ViewBag.Title = "index";
 }
-<div class="nav-left">
-    <div class="nav-logo"></div>
-    <div class="nav-title active">home</div>
-    <div class="nav-title">Raids</div>
-    <div class="nav-title">Activity</div>
-    <div class="nav-title">LeaderBoards</div>
-    <div class="nav-title">about</div>
 
-</div>
 <div class="container-splash inside-border">
-        @using (Html.BeginForm())
-        {
-            <div class="title-text">
-                <h1>Search a clan</h1>
-                <hr class="style11" />
-                @Html.TextBoxFor(u => u.Name, new { @class = "search", placeholder = "Enter clanname here", maxlength = "24" })
-                @Html.ValidationMessageFor(u => u.Name)
-                <hr class="style11" />
-            </div>
-        }
-        <div class="copyright-container"><p class="copyright">© 2016 NCSOFT Corporation. All rights reserved. NCSOFT, the interlocking NC logo, Aion, Lineage II, Blade & Soul, and all associated logos and designs are trademarks or registered trademarks of NCSOFT Corporation. All other trademarks are the property of their respective owners.</p></div>
+@using (Html.BeginForm())
+{
+    <div class="title-text">
+        <h1>Search a clan</h1>
+        <hr class="style11" />
+        @Html.TextBoxFor(u => u.Name, new { @class = "search", placeholder = "Enter clanname here", maxlength = "24" })
+        @Html.ValidationMessageFor(u => u.Name)
+        <hr class="style11" />
+    </div>
+}
+<div class="copyright-container"><p class="copyright">© 2016 NCSOFT Corporation. All rights reserved. NCSOFT, the interlocking NC logo, Aion, Lineage II, Blade & Soul, and all associated logos and designs are trademarks or registered trademarks of NCSOFT Corporation. All other trademarks are the property of their respective owners.</p></div>
 </div>
 
 
