@@ -215,5 +215,31 @@ namespace ClanManager.Models
                 }
             }
         }
+
+        public static bool addMember(string name, string clanname)
+        {
+            string query = @"insert into [Character](name, clan) VALUES (@nameQuery , @clanQuery)";
+
+            using (SqlConnection conn = Data.Connection)
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.Add(new SqlParameter("nameQuery", name));
+                    cmd.Parameters.Add(new SqlParameter("clanQuery", clanname));
+
+                    try
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            return true;
+                        }
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model Clan
+﻿@model Character
 @using ClanManager.Models
 @{
     ViewBag.Title = "Clans";
@@ -7,39 +7,62 @@
 <div class="container">
     @try
     {
-        <h2>@Data.selectedClan.Name</h2>
-        <hr class="style12" />
-        <div class="row">
-            <div class="col-md-6">
-                <p>Total Members: <span id="memberCount"></span> </p>
-                <p>Average Attack Power: @Math.Round(Data.selectedClan.AverageAP(Data.selectedClan.Members), 2) </p>
-                <p>Average Hongmoon Level: @Math.Round(Data.selectedClan.AverageHMLevel(Data.selectedClan.Members), 2) </p>
-                <p>Average Score: @Math.Round(Data.selectedClan.AverageScore(Data.selectedClan.Members), 2) </p>
-                <p>Server Group: @Data.selectedClan.ServerGroup(Data.selectedClan.Members) </p>
+        <div class="general-data">
+            <h2>@Data.selectedClan.Name</h2>
+            <hr class="style12" />
+            <p>Total Members: <span id="memberCount"></span><a data-toggle="modal" data-target="#addMembers"> <strong>+</strong></a>  </p>
+            <p>Average Attack Power: <span id="avgAP"></span> </p>
+            <p>Average Hongmoon Level: <span id="avgLevel"></span></p>
+            <p>Average Score: <span id="avgScore"></span></p>
+            <p>Server Group: <span id="server"></span> </p>
+        </div>
+        <div class="gear-milestones">
+            <p>Chokma Weapons: <span id="chokma"></span></p>
+            <p>True Hongmoon Energies: <span id="truesoul"></span></p>
+            <p>Unleashed Pets: <span id="unleashedpet"></span></p>
+            <p>Hongmoon Level 14+: <span id="maxlevel"></span></p>
+        </div>
+        <div class="container-class-amount">
+            <div class="class-tile">
+                <img src="~/images/class_icons/sin.png" alt="Assassin" height="75" width="75"/>
+                <p class="class-text"><span id="sinCount"></span></p></div>
+            <div class="class-tile">
+                <img src="~/images/class_icons/bd.png" alt="Blade Dancer" height="75" width="75"/>
+                <p class="class-text"><span id="bdCount"></span></p>
             </div>
-            <div class="col-md-3">
-                <p>Assassins: @Data.selectedClan.ClassAmount(Data.selectedClan.Members, "Assassin")</p>
-                <p>Blade Dancers: @Data.selectedClan.ClassAmount(Data.selectedClan.Members, "Blade Dancer")</p>
-                <p>Blade Masters: @Data.selectedClan.ClassAmount(Data.selectedClan.Members, "Blade Master")</p>
-                <p>Destroyers: @Data.selectedClan.ClassAmount(Data.selectedClan.Members, "Destroyer")</p>
-                <p>Force Masters: @Data.selectedClan.ClassAmount(Data.selectedClan.Members, "Force Master")</p>
+            <div class="class-tile">
+                <img src="~/images/class_icons/bm.png" alt="Blade Master" height="75" width="75"/>
+                <p class="class-text"><span id="bmCount"></span></p>
             </div>
-            <div class="col-md-3">
-                <p>Kung Fu Masters: @Data.selectedClan.ClassAmount(Data.selectedClan.Members, "Kung Fu Master")</p>
-                <p>Soul Fighters: @Data.selectedClan.ClassAmount(Data.selectedClan.Members, "Soul Fighter")</p>
-                <p>Summoners: @Data.selectedClan.ClassAmount(Data.selectedClan.Members, "Summoner")</p>
-                <p>Warlocks: @Data.selectedClan.ClassAmount(Data.selectedClan.Members, "Warlock")</p>
-            </div>
+            <div class="class-tile">
+                <img src="~/images/class_icons/des.png" alt="Destroyer" height="75" width="75"/>
+                <p class="class-text"><span id="desCount"></span></p></div>
+            <div class="class-tile">
+                <img src="~/images/class_icons/fm.png" alt="Force Master" height="75" width="75"/>
+                <p class="class-text"><span id="fmCount"></span></p></div>
+            <div class="class-tile">
+                <img src="~/images/class_icons/kfm.png" alt="Kung Fu Master" height="75" width="75"/>
+                <p class="class-text"><span id="kfmCount"></span></p></div>
+            <div class="class-tile">
+                <img src="~/images/class_icons/sf.png" alt="Soul Fighter" height="75" width="75" />
+                <p class="class-text"><span id="sfCount"></span></p></div>
+            <div class="class-tile">
+                <img src="~/images/class_icons/sum.png" alt="Summoner" height="75" width="75"/>
+                <p class="class-text"><span id="sumCount"></span></p></div>
+            <div class="class-tile">
+                <img src="~/images/class_icons/wl.png" alt="Warlock" height="75" width="75"/>
+                <p class="class-text"><span id="wlCount"></span></p></div>
         </div>
         <table id="memberTable" class="tablesorter table">
             <thead>
                 <tr>
                     <th></th>
                     <th>Name</th>
+                    <th>Class</th>
+                    <th>AP</th>
                     <th>Level</th>
-                    <th>Hitpoints</th>
-                    <th>Attack Power</th>
-                    <th>Critical</th>
+                    <th>Weapon</th>
+                    <th>Soul</th>
                     <th>Score</th>
                 </tr>
             </thead>
@@ -53,7 +76,38 @@
     }
 </div>
 
+@*add members bootstrap modal*@
+<div class="modal fade" id="addMembers" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal content-->
+            @using (Html.BeginForm())
+            {
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h2 class="modal-title">Add Members</h2>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        You can write the name of members in the box below to add them to the list. A program will verify which clan they are
+                        in and add them to their respective clan. Make sure you write the name correctly as it appears in-game. This includes
+                        alt-codes.
+                    </p>
+                    <p>You can instert multiple names at using by spliting them using enter.</p>
+                    <p><strong>Note:</strong> it can take a while to process multiple names so please be patient.</p>
+                    @Html.TextAreaFor(model => model.Name, new { @class = "form-control textarea-big" })
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Submit" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
 @section scripts{
 <script src="~/scripts/scripts.js"></script>
-<script></script>
 }

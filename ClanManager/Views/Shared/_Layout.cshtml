@@ -1,6 +1,17 @@
-﻿<!DOCTYPE html>
+﻿@using ClanManager.Models
+
+<!DOCTYPE html>
 <html>
 <head>
+    @{             
+        if (Data.selectedClan.Members != null)
+        {
+            List<Character> emptylist = new List<Character>();
+            emptylist.Add(new Character());
+            Data.selectedClan = new Clan(Data.selectedClan.Name, emptylist);
+            Data.selectedClan.Members.Clear();
+        }
+    }
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - ClanManager</title>
@@ -8,6 +19,8 @@
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Sintony" rel="stylesheet"> 
+    <script src="~/scripts/pageLoadReset.js"></script>
+
 </head>
 <body>
     <div class="nav-left">

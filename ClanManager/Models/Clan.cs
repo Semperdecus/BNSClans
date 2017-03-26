@@ -36,6 +36,7 @@ namespace ClanManager.Models
 
         public double AverageHMLevel(List<Character> members)
         {
+            //only works on simplified level names 
             double result = 0.00;
             foreach (Character c in members)
             {
@@ -143,52 +144,55 @@ namespace ClanManager.Models
                 #endregion
             }
 
+            //if there's x or more people in a certain server group return that group. 
+            //Prevents problems with mass server changes etc.
+            int numberVerifier = 2;
             #region check which group the clan members are located in return result
-            if(naGroup1 > 5)
+            if(naGroup1 > 2)
             {
                 result = "[NA]Group 1: Master Hong, Gunma, Taywong";
             }
-            else if (naGroup2 > 5)
+            else if (naGroup2 > numberVerifier)
             {
                 result = "[NA]Group 2: Mushin, Old Man Cho";
             }
-            else if(naGroup3 > 5)
+            else if(naGroup3 > numberVerifier)
             {
                 result = "[NA]Group 3: Jiwan, Soha, Dochun";
             }
-            else if(naGroup4 > 5)
+            else if(naGroup4 > numberVerifier)
             {
                 result = "[NA]Group 4: Poharan, Iksanun";
             }
-            else if(naGroup5 > 5)
+            else if(naGroup5 > numberVerifier)
             {
                 result = "[NA]Group 5: Yehara, Hajoon, Onmyung";
             }
-            else if(naGroup6 > 5)
+            else if(naGroup6 > numberVerifier)
             {
                 result = "[NA]Group 6: Juwol, Yunwa, Junghado";
             }
-            else if(euGroup1 > 5)
+            else if(euGroup1 > numberVerifier)
             {
                 result = "[EU]Group 1: Windrest, Wild Springs, Highland Gate";
             }
-            else if (euGroup2 > 5)
+            else if (euGroup2 > numberVerifier)
             {
                 result = "[EU]Group 2: Cardinal Gates, Hao District, Greenhollow, Spirit’s Rest";
             }
-            else if (euGroup3 > 5)
+            else if (euGroup3 > numberVerifier)
             {
                 result = "[EU]Group 3: Starfall Crater, Ebon Hall, Angler’s Watch, Twin Wagons";
             }
-            else if (euGroup4 > 5)
+            else if (euGroup4 > numberVerifier)
             {
                 result = "[EU]Group 4: [DE] Frostgipfel, [DE] Bambusdorf";
             }
-            else if (euGroup5 > 5)
+            else if (euGroup5 > numberVerifier)
             {
                 result = "[EU]Group 5: [DE] Windweide, [DE] Himmelsfarm";
             }
-            else if (euGroup6 > 5)
+            else if (euGroup6 > numberVerifier)
             {
                 result = "[EU]Group 6: [FR] Dokumo, [FR] Ogong, [FR] Hogdonny";
             }
@@ -200,12 +204,69 @@ namespace ClanManager.Models
 
             return result;
         }
+
         public int ClassAmount(List<Character> members, string className)
         {
             int result = 0;
             foreach (Character c in members)
             {
                 if (c.Class == className)
+                {
+                    result += 1;
+                }
+            }
+
+            return result;
+        }
+
+        public int ChokmaAmount(List<Character> members)
+        {
+            int result = 0;
+            foreach (Character c in members)
+            {
+                if (c.Weapon.Contains("Raven"))
+                {
+                    result += 1;
+                }
+            }
+
+            return result;
+        }
+
+        public int TrueSoulAmount(List<Character> members)
+        {
+            int result = 0;
+            foreach (Character c in members)
+            {
+                if (c.Soul.Contains("True"))
+                {
+                    result += 1;
+                }
+            }
+
+            return result;
+        }
+
+        public int Hongmoon15Amount(List<Character> members)
+        {
+            int result = 0;
+            foreach (Character c in members)
+            {
+                if (Convert.ToInt32(c.Level) >= 14)
+                {
+                    result += 1;
+                }
+            }
+
+            return result;
+        }
+
+        public int UnleashedPetAmount(List<Character> members)
+        {
+            int result = 0;
+            foreach (Character c in members)
+            {
+                if (c.Pet.Contains("Unleashed"))
                 {
                     result += 1;
                 }

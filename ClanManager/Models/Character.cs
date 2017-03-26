@@ -95,5 +95,54 @@ namespace ClanManager.Models
         {
 
         }
+
+        //this method trims unneeded information from weapon names (eg. Razor, staff, sword, ... )
+        public string GetSimplifiedWeaponName(string weaponFullName)
+        {
+            string simplifiedWeaponName = "";
+            string[] weaponTypes = new string[] { " Razor", " Staff", " Lynblade", " Bracers", " Bangle", " Axe", " Sword", " Gauntlet", " Dagger" };
+            foreach (string x in weaponTypes)
+            {
+                if (weaponFullName.Contains(x))
+                {
+                    simplifiedWeaponName = weaponFullName.Replace(x, "");
+                }
+            }
+            return simplifiedWeaponName;
+        }
+
+        public string GetSimplifiedSoulName(string soulFullName)
+        {
+            string simplifiedSoulName = "";
+
+            if(soulFullName.Contains("Awakened Hongmoon Critical Energy"))
+            {
+                simplifiedSoulName = soulFullName.Replace(" Hongmoon Critical", "");
+            }
+            else if(soulFullName.Contains("True Hongmoon Energy"))
+            {
+                simplifiedSoulName = soulFullName.Replace(" Hongmoon", "");
+            }
+            else
+            {
+                simplifiedSoulName = soulFullName;
+            }
+            return simplifiedSoulName;
+        }
+
+        public string GetSimplifiedLevel(string levelFullName)
+        {
+            string simplifiedLevelName = "";
+
+            if (levelFullName.Contains("Level 50 • "))
+            {
+                simplifiedLevelName = levelFullName.Replace("Level 50 • ", "HM ");
+            }
+            else
+            {
+                simplifiedLevelName = levelFullName;
+            }
+            return simplifiedLevelName;
+        }
     }
 }

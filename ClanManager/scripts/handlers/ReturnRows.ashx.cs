@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace ClanManager.App_Code
+namespace ClanManager
 {
     /// <summary>
     /// Summary description for ReturnRows

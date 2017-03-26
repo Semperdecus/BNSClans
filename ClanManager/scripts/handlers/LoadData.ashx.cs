@@ -73,16 +73,19 @@ namespace ClanManager
                                                     databaseCharacter.Name +
                                                 @"</td>
                                                 <td> " +
-                                                    databaseCharacter.Level +
-                                                @"</td>
-                                                <td> " +
-                                                    databaseCharacter.HP +
-                                                @"</td> 
+                                                    databaseCharacter.Class +
+                                                 @"</td>
                                                 <td> " +
                                                     databaseCharacter.AP +
                                                 @"</td>
                                                 <td> " +
-                                                    databaseCharacter.CriticalHit +
+                                                    databaseCharacter.GetSimplifiedLevel(databaseCharacter.Level) +
+                                                @"</td> 
+                                                <td> " +
+                                                    databaseCharacter.GetSimplifiedWeaponName(databaseCharacter.Weapon) +
+                                                @"</td>
+                                                <td> " +
+                                                    databaseCharacter.GetSimplifiedSoulName(databaseCharacter.Soul) +
                                                 @"</td>
                                                 <td> " +
                                                     databaseCharacter.DPS.ToString() +
