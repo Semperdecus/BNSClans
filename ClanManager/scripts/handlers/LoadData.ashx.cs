@@ -67,8 +67,8 @@ namespace ClanManager
                                     returnRowNumber = a.ToString();
                                 }
                                 //write row to page
-                                row = "<tr><td class=\"number\"> " +
-                                                    returnRowNumber +
+                                row = "<tr class=\"tablerow\"><td class=\"number sorter-false\"> " +
+                                                     
                                                 "</td><td> " +
                                                     databaseCharacter.Name +
                                                 @"</td>

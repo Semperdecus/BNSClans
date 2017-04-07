@@ -1,21 +1,32 @@
 ﻿var total = 0;
 var calcTotals = true;
-
+var rowCount = $('#memberTable tr').length;
+var loadingPercentage = 0;
 $(document).one('ready', function (total) {
     //returnvar has the amount of members saved (needed for the loop)
     $.get("scripts/handlers/ReturnRows.ashx", function (returnvar) {
         for (var i = 0; i < returnvar; i++) {
-
             //loaddata handler creates a character object and returns this in an html row
-            $.get("scripts/handlers/LoadData.ashx?value=" + encodeURIComponent(i+1), function (html) {
+            $.get("scripts/handlers/LoadData.ashx?value=" + encodeURIComponent(i + 1), function (html) {
                 //writes the html row from the loaddata response to element result in page
                 $("#memberTable tbody").append(html);
                 $("#memberCount").text(returnvar);
+
+                rowCount = $('#memberTable tr').length;
+                loadingPercentage = ((100 / returnvar) * rowCount);
+                if (rowCount < 11) {
+                    $("#numberTable tbody").append("<tr><td class=\"number\">" + "0" + (rowCount -1) + "</td></tr>");
+                    $('#loading').width(loadingPercentage + '%');
+                }
+                else {
+                    $("#numberTable tbody").append("<tr><td class=\"number\">" + (rowCount-1) + "</td></tr>");
+                    $('#loading').width(loadingPercentage + '%');
+                }
+
             });
         }
     });
 });
-
 
 //functions after data has been loaded in
 var ajaxCount = 0;
@@ -92,6 +103,8 @@ $(document).ajaxStop(function () {
         $.get("scripts/handlers/ClanSummaryData.ashx?value=wl", function (html) {
             $("#wlCount").text(html);
         });
+        $('#loading').width('0%');
+
     }
 
     if (ajaxCount == 2) {

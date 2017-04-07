@@ -14,7 +14,7 @@ namespace ClanManager.Models
     {
         public static int rowNumber = 0;
         public static Clan selectedClan = new Clan();
-        public static List<Character> dynamicCharacterList = new List<Character>();
+        //private static readonly string DatabaseString = "Server=mssql.fhict.local;Database=dbi340015;User Id=dbi340015;Password=qw12QW!@;";
         private static readonly string DatabaseString = "Data Source=TERROG;Initial catalog=BNSCharacters;Integrated Security=true";
 
         public static string url = "http://eu-bns.ncsoft.com/ingame/bs/character/profile?c="; //get link
@@ -115,30 +115,6 @@ namespace ClanManager.Models
             }
             catch { return null; }
         }
-
-
-        //NEED TO MAKE UPDATE BUTTON TO CHECK DATA FROM DATABASE WITH F2 DATA
-
-        //public static List<string> getPlayerClan(string clanName)
-        //{
-        //    try
-        //    {
-        //        characternames = Data.getCharactersFromClan(clanName);
-        //        List<string> clanmembers = new List<string>();
-
-        //        foreach (string s in characternames)
-        //        {
-        //            string html = getHtml(url + s);
-        //            CQ dom = CQ.Create(html);
-        //            string clanname = dom[".desc li"].Eq(4).Text().Trim(); //clan
-
-        //            if (clanname.ToLower() == clanName.ToLower())
-        //                clanmembers.Add(s);
-        //        }
-        //        return clanmembers;
-        //    }
-        //    catch { return null; }
-        //}
 
         public static SqlConnection Connection
         {

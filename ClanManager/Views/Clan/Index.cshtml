@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Clans";
 }
+<div class="loading" id="loading"></div>
 
 <div class="container">
     @try
@@ -53,6 +54,9 @@
                 <img src="~/images/class_icons/wl.png" alt="Warlock" height="75" width="75"/>
                 <p class="class-text"><span id="wlCount"></span></p></div>
         </div>
+        <table id="numberTable" class="numbertable">
+            <tbody></tbody>
+        </table>
         <table id="memberTable" class="tablesorter table">
             <thead>
                 <tr>

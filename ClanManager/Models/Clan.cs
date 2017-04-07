@@ -61,7 +61,14 @@ namespace ClanManager.Models
             double result = 0.00;
             foreach (Character c in members)
             {
-                result += Convert.ToDouble(c.DPS);
+                try
+                {
+                    result += Convert.ToDouble(c.DPS);
+                }
+                catch
+                {
+
+                }
             }
 
             result = result / members.Count();
@@ -224,9 +231,16 @@ namespace ClanManager.Models
             int result = 0;
             foreach (Character c in members)
             {
-                if (c.Weapon.Contains("Raven"))
+                try
                 {
-                    result += 1;
+                    if (c.Weapon.Contains("Raven"))
+                    {
+                        result += 1;
+                    }
+                }
+                catch
+                {
+                    return result;
                 }
             }
 
@@ -238,9 +252,16 @@ namespace ClanManager.Models
             int result = 0;
             foreach (Character c in members)
             {
-                if (c.Soul.Contains("True"))
+                try
                 {
-                    result += 1;
+                    if (c.Soul.Contains("True"))
+                    {
+                        result += 1;
+                    }
+                }
+                catch
+                {
+                    return result;
                 }
             }
 
@@ -252,9 +273,17 @@ namespace ClanManager.Models
             int result = 0;
             foreach (Character c in members)
             {
-                if (Convert.ToInt32(c.Level) >= 14)
+                try
                 {
-                    result += 1;
+                    if (Convert.ToInt32(c.Level) >= 14)
+                    {
+                        result += 1;
+                    } 
+                }
+                //sometimes with multthreading this script runs before trimming of data is finished and will throw an exception.
+                catch
+                {
+                    return result;
                 }
             }
 
@@ -266,9 +295,16 @@ namespace ClanManager.Models
             int result = 0;
             foreach (Character c in members)
             {
-                if (c.Pet.Contains("Unleashed"))
+                try
                 {
-                    result += 1;
+                    if (c.Pet.Contains("Unleashed"))
+                    {
+                        result += 1;
+                    }
+                }
+                catch
+                {
+                    return result;
                 }
             }
 

@@ -37,6 +37,27 @@ h2 {
 table {
     margin-left: -18px;
 }
+.numbertable{
+    background: transparent;
+    position: absolute;
+    left: 12px;
+    width: 20px;
+    z-index: 0;
+    margin-top: 32px;
+}
+.numbertable tr{
+    height: 36px;
+}
+.numbertable tr:hover{
+    background: transparent;
+}
+.number{
+    font-size: 11px;
+    color: #4e4e4e;
+    -ms-transform: rotate(90deg); /* IE 9 */
+    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+    transform: rotate(90deg);
+}
 th.headerSortUp:after { 
     font-size: 12px;
     content: '▲';
@@ -63,16 +84,6 @@ td, tr{
     transition: 0.05s;
 }
 
-.number{
-    font-size: 11px;
-    color: #4e4e4e;
-    -ms-transform: rotate(90deg); /* IE 9 */
-    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
-    transform: rotate(90deg);
-    position: absolute;
-    margin-top: 2px;
-    left: -8px;
-}
 tbody tr:hover{
     background-color: #e7e7ee;
 }
@@ -133,6 +144,15 @@ p {
     cursor: pointer;
 }
 
+.loading{
+    z-index: 5;
+    top:-1px;
+    position:absolute;
+    height: 3px;
+    background: #fff666;
+    box-shadow: 0px 0px 1px #888888;
+    transition: 1s;
+}
 .active{
     background: #fff666;
     cursor: default;

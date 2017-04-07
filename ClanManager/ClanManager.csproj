@@ -147,14 +147,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Global.asax" />
-    <Content Include="images\banner1.png" />
-    <Content Include="images\banner2.png" />
-    <Content Include="images\banner3.png" />
-    <Content Include="images\banner4.png" />
-    <Content Include="images\banner5.png" />
-    <Content Include="images\banner6.png" />
-    <Content Include="images\banner7.png" />
-    <Content Include="images\banner8.png" />
     <Content Include="images\class_icons\bd.png" />
     <Content Include="images\class_icons\bm.png" />
     <Content Include="images\class_icons\des.png" />
@@ -178,6 +170,7 @@
     <Content Include="App_Code\LoadMemberCount.ashx" />
     <Content Include="scripts\handlers\ReturnRows.ashx" />
     <Content Include="scripts\handlers\ClanSummaryData.ashx" />
+    <None Include="Properties\PublishProfiles\VenusCheapHositng.pubxml" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
