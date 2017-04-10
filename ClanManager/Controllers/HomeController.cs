@@ -26,7 +26,7 @@ namespace ClanManager.Controllers
             emptylist.Add(new Character());
             Data.selectedClan = new Clan(clan.Name, emptylist);
             emptylist.Clear();
-            return RedirectToAction("index", "Clan");
+            return RedirectToAction("index", "Clan", new { id = clan.Name });
         }
 
         public ActionResult About()

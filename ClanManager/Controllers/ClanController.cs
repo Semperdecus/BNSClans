@@ -9,17 +9,24 @@ namespace ClanManager.Controllers
 {
     public class ClanController : Controller
     {
-        // GET: Clan
-        public ActionResult Index()
+        // GET: Clan/Name
+        public ActionResult Index(string id)
         {
-            if(Data.selectedClan == null || Data.selectedClan.Name == "")
+            if (Data.selectedClan == null || Data.selectedClan.Name == "" && id != null || id != "")
             {
-                return RedirectToAction("Index", "Home");
+                Data.selectedClan.Name = id;
+                return View();
             }
-            else
+            else if(id == null || id == "")
             {
                 return View();
             }
+            else
+            {
+                Data.selectedClan.Name = id;
+                return View();
+            }
+
         }
 
         [HttpPost]

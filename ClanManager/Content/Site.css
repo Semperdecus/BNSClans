@@ -182,12 +182,12 @@ p {
     margin-left: 200px;
     width: calc(100% - 200px);
     height: 100%;
-    background-image: url('../images/theVideoGameGallery_12488_4993x3076.jpg');
+    /*background-image: url('../images/splash4.jpg');
     background-image: url('../images/theVideoGameGallery_12497_5374x2856.jpg');
     background-image: url('../images/theVideoGameGallery_12494_2500x1553.jpg');
     background-image: url('../images/theVideoGameGallery_12492_2500x1572.jpg');
     background-image: url('../images/theVideoGameGallery_12491_3000x1643.jpg');
-    background-image: url('../images/theVideoGameGallery_12489_4961x2976.jpg');
+    background-image: url('../images/theVideoGameGallery_12489_4961x2976.jpg');*/
     background-size: cover;
     background-position: bottom;
     z-index: 0;
@@ -252,7 +252,7 @@ h1{
     font-family: Oswald-Regular;
     text-transform: uppercase;
     color: white;
-    text-shadow: 1px 1px 3px #000000, -1px -1px 3px #000000, 1px -1px 3px #000000, -1px 1px 3px #000000;
+    text-shadow: 1px 1px 1px #000000, -1px -1px 1px #000000, 1px -1px 1px #000000, -1px 1px 1px #000000;
 }
 hr.style11 {
     width: 470px;

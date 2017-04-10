@@ -20,9 +20,9 @@ namespace ClanManager.App_Start
         public static void Clan(HttpConfiguration configuration)
         {
             configuration.Routes.MapHttpRoute(
-                "API Default",
-                "{controller}/{action}/{name}",
-                new { name = RouteParameter.Optional });
+                "ClanLookup",
+                "Clan/{id}",
+                new { controller = "Clan", action = "Index", id = RouteParameter.Optional });
         }
     }
 }
