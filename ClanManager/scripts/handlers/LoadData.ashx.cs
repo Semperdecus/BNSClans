@@ -14,7 +14,6 @@ namespace ClanManager
     /// </summary>
     public class LoadData : IHttpHandler
     {
-        private bool write = false;
         private string row = "";
 
         public void ProcessRequest(HttpContext context)
@@ -44,7 +43,7 @@ namespace ClanManager
                 //conn.Open();
                 using (SqlDataReader rdr = cmd.ExecuteReader())
                 {
-                    while (rdr.Read() && !write)
+                    while (rdr.Read())
                     {
                         try
                         {
@@ -68,15 +67,18 @@ namespace ClanManager
                                 }
                                 //write row to page
                                 row = "<tr class=\"tablerow\"><td class=\"number sorter-false\"> " +
-                                                     
                                                 "</td><td> " +
-                                                    databaseCharacter.Name +
+                                                    "<a href=\"https://www.bnstree.com/character/eu/" + databaseCharacter.Name + "\">" + databaseCharacter.Name + "</a>" +
+                                                    //"<a href=\"/Profile/" + databaseCharacter.Name + "\">" + databaseCharacter.Name + "</a>" +
                                                 @"</td>
                                                 <td> " +
                                                     databaseCharacter.Class +
                                                  @"</td>
                                                 <td> " +
                                                     databaseCharacter.AP +
+                                                "</td>" +
+                                                "<td class=\"nodisplay\"> " +
+                                                    databaseCharacter.HP +
                                                 @"</td>
                                                 <td> " +
                                                     databaseCharacter.GetSimplifiedLevel(databaseCharacter.Level) +
@@ -86,8 +88,42 @@ namespace ClanManager
                                                 @"</td>
                                                 <td> " +
                                                     databaseCharacter.GetSimplifiedSoulName(databaseCharacter.Soul) +
-                                                @"</td>
-                                                <td> " +
+                                                "</td>" +
+                                                "<td class=\"nodisplay\"> " +
+                                                    databaseCharacter.Pet +
+                                                "</td>" +
+                                                "<td class=\"nodisplay\"> " +
+                                                    databaseCharacter.Earring +
+                                                "</td>" +
+                                                "<td class=\"nodisplay\"> " +
+                                                    databaseCharacter.Necklace +
+                                                "</td>" +
+                                                "<td class=\"nodisplay\"> " +
+                                                    databaseCharacter.Bracelet +
+                                                "</td>" +
+                                                "<td class=\"nodisplay\"> " +
+                                                    databaseCharacter.Ring +
+                                                "</td>" +
+                                                "<td class=\"nodisplay\"> " +
+                                                    databaseCharacter.Belt +
+                                                "</td>" + "<td class=\"nodisplay\"> " +
+                                                    databaseCharacter.SoulBadge +
+                                                "</td>" + "<td class=\"nodisplay\"> " +
+                                                    databaseCharacter.CriticalHit +
+                                                "</td>" + "<td class=\"nodisplay\"> " +
+                                                    databaseCharacter.CriticalHitRate +
+                                                "</td>" + "<td class=\"nodisplay\"> " +
+                                                    databaseCharacter.CriticalDmg +
+                                                "</td>" + "<td class=\"nodisplay\"> " +
+                                                    databaseCharacter.CriticalDmgRate +
+                                                "</td>" + "<td class=\"nodisplay\"> " +
+                                                    databaseCharacter.ElementalDmg +
+                                                "</td>" + "<td class=\"nodisplay\"> " +
+                                                    databaseCharacter.ElementalDmgRate +
+                                                "</td>" + "<td class=\"nodisplay\"> " +
+                                                    databaseCharacter.Server +
+                                                "</td>" +
+                                                "<td> " +
                                                     databaseCharacter.DPS.ToString() +
                                                 @"</td></tr>";
                                 response.Write(row);
@@ -99,14 +135,16 @@ namespace ClanManager
                         }
                         catch
                         {
+                            Website.errorLoadingData += 1;
+
+                            row = "<tr class=\"tablerow\"><td class=\"number sorter-false\"> </td><td> " + rdr["Name"].ToString() + " </td>" +
+                                "<td> </td><td> </td><td> </td><td> </td><td> </td><td> </td></tr>";
+
+                            response.Write(row);
                         }
                     }
                 }
             }
-            if(write == true)
-            {
-                write = false;
-            }      
         }
 
         public bool IsReusable

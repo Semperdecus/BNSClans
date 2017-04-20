@@ -9,11 +9,6 @@ namespace ClanManager.Controllers
 {
     public class ProfileController : Controller
     {
-        // GET: Profile
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         [HttpPost]
         public ActionResult Index(Character character)
@@ -21,6 +16,25 @@ namespace ClanManager.Controllers
             ViewBag.Character = Data.getAllPlayerDataTrimmed(character.Name);
 
             return View();
+        }
+
+        // GET: Profile/Name
+        public ActionResult ProfileOverview(string id)
+        {
+            if (id != null || id != "")
+            {
+                ViewBag.Character = Data.getAllPlayerDataTrimmed(id);
+                return View();
+            }
+            else if (id == null || id == "")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ViewBag.Character = Data.getAllPlayerDataTrimmed(id);
+                return View();
+            }
         }
     }
 }

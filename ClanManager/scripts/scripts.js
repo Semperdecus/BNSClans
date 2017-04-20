@@ -2,7 +2,12 @@
 var calcTotals = true;
 var rowCount = $('#memberTable tr').length;
 var loadingPercentage = 0;
+
+document.getElementById('default').checked = true;
+
 $(document).one('ready', function (total) {
+    $('#checkboxes').hide();
+
     //returnvar has the amount of members saved (needed for the loop)
     $.get(location.protocol + "//" + location.host + "/scripts/handlers/ReturnRows.ashx", function (returnvar) {
         for (var i = 0; i < returnvar; i++) {
@@ -104,8 +109,14 @@ $(document).ajaxStop(function () {
         $.get(location.protocol + "//" + location.host + "/scripts/handlers/ClanSummaryData.ashx?value=wl", function (html) {
             $("#wlCount").text(html);
         });
+        $.get(location.protocol + "//" + location.host + "/scripts/handlers/ClanSummaryData.ashx?value=errors", function (html) {
+            
+            $("#errorLoading").text(html);
+        });
+
         $('#loading').width('0%');
 
+        ajaxCount += 1;
     }
 
     if (ajaxCount == 2) {
@@ -117,6 +128,25 @@ $(document).ajaxStop(function () {
                 }
             }
         });
+
+        $('#loadingAnimation').hide();
+
+        $('#checkboxes').show();
+
     }
 });
 
+//choosing data to display
+$("input[type='checkbox']").change(function () {
+    var val = $(this).val();
+    $("#memberTable tr:first").find("th:eq(" + val + ")").toggle();
+    $("#memberTable tr").each(function () {
+        $(this).find("td:eq(" + val + ")").toggle();
+    });
+    if ($("#memberTable tr:first").find("th:visible").length > 0) {
+        $("#memberTable").removeClass("noborder");
+    }
+    else {
+        $("#memberTable").addClass("noborder");
+    }
+});

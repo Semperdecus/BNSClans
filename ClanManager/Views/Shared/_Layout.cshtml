@@ -10,6 +10,7 @@
             emptylist.Add(new Character());
             Data.selectedClan = new Clan(Data.selectedClan.Name, emptylist);
             Data.selectedClan.Members.Clear();
+            Website.errorLoadingData = 0;
         }
     }
     <meta charset="utf-8" />
@@ -25,14 +26,19 @@
 <body>
     <div class="nav-left">
         <a href="~/Home/Index"><div class="nav-logo"></div></a>
-        <a href="~/Home/Index"><div class="nav-title active">Home</div></a>
-            <div class="nav-title">Clans</div>
-            <div class="nav-title">About</div>
+        <a href="~/Home/Index"><div class="nav-title @(ViewContext.RouteData.Values["Action"].ToString() == "Index" && 
+            ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")">Home</div></a>
+        <a href="~/Home/Clans"><div class="nav-title @(ViewContext.RouteData.Values["Controller"].ToString() == "Clan" || 
+            ViewContext.RouteData.Values["Action"].ToString() == "Clans" && ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")">Clans</div></a>
+        <a href="~/Home/About"><div class="nav-title @(ViewContext.RouteData.Values["Action"].ToString() == "About" ? "active" : "")">About</div></a>
+
+
     </div>
     @RenderBody()
     <script src="~/scripts/jquery.tablesorter.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     @RenderSection("scripts", false)
-
+    <link href="~/Content/Profile.css" rel="stylesheet" />
+    @RenderSection("profileCSS", false)
 </body>
 </html>

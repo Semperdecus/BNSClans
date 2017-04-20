@@ -106,6 +106,18 @@ namespace ClanManager.scripts.handlers
                 int truesoul = Data.selectedClan.TrueSoulAmount(Data.selectedClan.Members);
                 response = truesoul.ToString();
             }
+            //returns the amount of F2 pages which couldn't be opened
+            else if (recievedValue == "errors")
+            {
+                if(Website.errorLoadingData > 0)
+                {
+                    response = "(F2 Page errors: " + Website.errorLoadingData.ToString() + ")";
+                }
+                else
+                {
+                    response = "";
+                }
+            }
             context.Response.Write(response);
         }
 

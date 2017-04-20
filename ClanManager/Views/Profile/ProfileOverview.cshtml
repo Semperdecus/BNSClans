@@ -1,0 +1,51 @@
+﻿@model Character
+@using ClanManager.Models
+@{
+    ViewBag.Title = "Profile";
+}
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        <h2>Character Name</h2>
+        <div class="form-login">
+            @Html.TextBoxFor(u => u.Name, new { @class = "form-login", placeholder = "Name" })
+            @Html.ValidationMessageFor(u => u.Name)
+        </div>
+        <input type="submit" value="Create" class="button-login" />
+    }
+
+    @if (ViewBag.Character != null)
+    {
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Clan</th>
+                <th>Level</th>
+                <th>Hitpoints</th>
+                <th>Attack Power</th>
+                <th>Critical</th>
+            </tr>
+
+            <tr>
+                <td>
+                    @ViewBag.Character.Name
+                </td>
+                <td>
+                    @ViewBag.Character.Clan
+                </td>
+                <td>
+                    @ViewBag.Character.Level
+                </td>
+                <td>
+                    @ViewBag.Character.HP
+                </td>
+                <td>
+                    @ViewBag.Character.AP
+                </td>
+                <td>
+                    @ViewBag.Character.CriticalHit
+                </td>
+            </tr>
+        </table>
+    }
+</div>

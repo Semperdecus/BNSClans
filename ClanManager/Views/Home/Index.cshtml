@@ -7,7 +7,7 @@
 <div class="container-splash inside-border">
 @using (Html.BeginForm())
 {
-    <div class="title-text">
+    <div class="title-text" style="background: none;">
         <h1>Search a clan</h1>
         <hr class="style11" />
         @Html.TextBoxFor(u => u.Name, new { @class = "search", placeholder = "Enter clanname here", maxlength = "24" })

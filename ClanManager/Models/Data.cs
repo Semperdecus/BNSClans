@@ -113,7 +113,7 @@ namespace ClanManager.Models
 
                 return characterData;
             }
-            catch { return null; }
+            catch { return new Character(name); }
         }
 
         public static SqlConnection Connection

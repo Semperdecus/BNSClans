@@ -278,12 +278,11 @@ namespace ClanManager.Models
                     if (Convert.ToInt32(c.Level) >= 14)
                     {
                         result += 1;
-                    } 
+                    }
                 }
-                //sometimes with multthreading this script runs before trimming of data is finished and will throw an exception.
                 catch
                 {
-                    return result;
+
                 }
             }
 

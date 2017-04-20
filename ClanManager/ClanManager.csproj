@@ -140,6 +140,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Home.css" />
+    <Content Include="Content\Profile.css" />
     <Content Include="Content\SiteDark.css" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
@@ -185,6 +186,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Website.cs" />
     <Compile Include="scripts\handlers\ClanSummaryData.ashx.cs">
       <DependentUpon>ClanSummaryData.ashx</DependentUpon>
     </Compile>
@@ -223,9 +225,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Profile\Index.cshtml" />
-    <Content Include="Views\Clan\Index.cshtml" />
+    <Content Include="Views\Profile\ProfileOverview.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Clan\ClanOverview.cshtml" />
+    <Content Include="Views\Home\Clans.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

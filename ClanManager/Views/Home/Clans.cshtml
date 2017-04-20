@@ -1,0 +1,19 @@
+﻿@model Character
+@using ClanManager.Models
+@{
+    ViewBag.Title = "Clans";
+}
+
+<h2>Clans</h2>
+
+
+@using (Html.BeginForm())
+{
+    <div class="title-text">
+        <h1>Search a clan</h1>
+        <hr class="style11" />
+        @Html.TextBoxFor(u => u.Name, new { @class = "search", placeholder = "Enter clanname here", maxlength = "24" })
+        @Html.ValidationMessageFor(u => u.Name)
+        <hr class="style11" />
+    </div>
+}

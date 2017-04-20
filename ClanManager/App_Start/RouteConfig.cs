@@ -16,7 +16,12 @@ namespace ClanManager
             routes.MapRoute(
                  name: "ClanLookup",
                  url: "Clan/{id}",
-                 defaults: new { controller = "Clan", action = "Index", id = UrlParameter.Optional });
+                 defaults: new { controller = "Clan", action = "ClanOverview", id = UrlParameter.Optional });
+
+            routes.MapRoute(
+                 name: "ProfileLookup",
+                 url: "Profile/{id}",
+                 defaults: new { controller = "Profile", action = "ProfileOverview", id = UrlParameter.Optional });
 
             routes.MapRoute(
                 name: "Default",
