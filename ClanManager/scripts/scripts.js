@@ -7,6 +7,7 @@ document.getElementById('default').checked = true;
 
 $(document).one('ready', function (total) {
     $('#checkboxes').hide();
+    $('#memberAvatars').hide();
 
     //returnvar has the amount of members saved (needed for the loop)
     $.get(location.protocol + "//" + location.host + "/scripts/handlers/ReturnRows.ashx", function (returnvar) {
@@ -20,11 +21,11 @@ $(document).one('ready', function (total) {
                 rowCount = $('#memberTable tr').length;
                 loadingPercentage = ((100 / returnvar) * rowCount);
                 if (rowCount < 11) {
-                    $("#numberTable tbody").append("<tr><td class=\"number\">" + "0" + (rowCount -1) + "</td></tr>");
+                    $("#numberTable tbody").append("<tr><td class=\"number\">" + "0" + (rowCount - 1) + "</td></tr>");
                     $('#loading').width(loadingPercentage + '%');
                 }
                 else {
-                    $("#numberTable tbody").append("<tr><td class=\"number\">" + (rowCount-1) + "</td></tr>");
+                    $("#numberTable tbody").append("<tr><td class=\"number\">" + (rowCount - 1) + "</td></tr>");
                     $('#loading').width(loadingPercentage + '%');
                 }
 
@@ -113,7 +114,9 @@ $(document).ajaxStop(function () {
             
             $("#errorLoading").text(html);
         });
-
+        $.get(location.protocol + "//" + location.host + "/scripts/handlers/ClanSummaryData.ashx?value=avatars", function (html) {
+            $("#memberAvatars").append(html);
+        });
         $('#loading').width('0%');
 
         ajaxCount += 1;
@@ -130,7 +133,7 @@ $(document).ajaxStop(function () {
         });
 
         $('#loadingAnimation').hide();
-
+        $('#loadingAnimation2').hide();
         $('#checkboxes').show();
 
     }
@@ -148,5 +151,22 @@ $("input[type='checkbox']").change(function () {
     }
     else {
         $("#memberTable").addClass("noborder");
+    }
+});
+
+//clicking the avatar button
+$("#showAvatar").click(function () {
+    if ($('#memberData').is(":hidden"))
+    {
+        $(this).css("background-color", "#e7e7ee");
+
+        $('#memberData').show();
+        $('#memberAvatars').hide();
+    }
+    else if ($('#memberAvatars').is(":hidden")) {
+        $('#memberAvatars').show();
+        $('#memberData').hide();
+        $(this).css("background-color", "#fff666");
+
     }
 });

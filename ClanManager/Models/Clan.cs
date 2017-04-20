@@ -309,5 +309,27 @@ namespace ClanManager.Models
 
             return result;
         }
+
+        public string AvatarHTMLList(List<Character> members)
+        {
+            string responseHtml = "";
+            foreach (Character c in members)
+            {
+                try
+                {
+                    if (c.Avatar != null || c.Avatar == "")
+                    {
+                        responseHtml += "<img src= \"" + c.Avatar + "\" title = \"" + c.Name +
+                                    "\" \"height = \"310\" width = \"189\" onerror=\"this.style.display='none'\" /> ";
+                    }
+                }
+                catch
+                {
+                    return responseHtml;
+                }
+            }
+
+            return responseHtml;
+        }
     }
 }

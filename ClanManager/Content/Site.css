@@ -10,7 +10,9 @@
 body {
     padding-bottom: 20px;
     background: #f6f6f6;
-    overflow: hidden;
+    overflow: auto;
+    overflow-x: hidden;
+
 }
 a{
     text-decoration: none;
@@ -179,10 +181,30 @@ p {
     z-index: 1;
     -ms-overflow-style: none;
     overflow:scroll;
-    overflow-x:auto;
+    overflow-x:hidden;
     right: -34px;
 }
 
+.container-avatars{
+    position: absolute;
+    margin-left: 200px;
+    width: calc(100% - 166px);
+    max-width: calc(100% - 166px);
+    height: 100%;
+    -ms-overflow-style: none;
+    overflow:scroll;
+    overflow-x:hidden;
+    right: -34px;
+    background: transparent;
+}
+
+.container-avatars img{
+    width: 222px;
+    height: 365px;
+    float: left;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
 .container-splash {
     position: absolute;
     margin-left: 200px;
@@ -235,15 +257,6 @@ textarea {
     max-width: 280px;
 }
 
-.container-top {
-    width: 100%;
-    background-image: url('../images/banner8.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 540px;
-    margin-top: 80px;
-    overflow: hidden;
-}
 .title-text {
     text-align: center;
     width: 100%;

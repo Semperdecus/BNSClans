@@ -14,15 +14,18 @@ namespace ClanManager
     /// </summary>
     public class LoadData : IHttpHandler
     {
+
         private string row = "";
 
         public void ProcessRequest(HttpContext context)
         {
-            HttpResponse response = context.Response; 
+            string recievedValue = Convert.ToString(context.Request["value"]);
+
+            HttpResponse response = context.Response;
 
             //the number returned from database to see how many clan members are in the clan. 
             //Passed on through script.js since for loop is happening in there so we need this var in both places.
-            int a = Convert.ToInt32(context.Request["value"]);
+            int rowNumber = Convert.ToInt32(context.Request["value"]);
 
             //this number keeps track of current row that needs to be processed.
             Data.rowNumber += 1;
@@ -38,7 +41,7 @@ namespace ClanManager
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
                 cmd.Parameters.Add(new SqlParameter("clanname", Data.selectedClan.Name.ToLower()));
-                cmd.Parameters.Add(new SqlParameter("rowNumber", a));
+                cmd.Parameters.Add(new SqlParameter("rowNumber", rowNumber));
 
                 //conn.Open();
                 using (SqlDataReader rdr = cmd.ExecuteReader())
@@ -57,13 +60,13 @@ namespace ClanManager
 
                                 //write row number correctly
                                 string returnRowNumber = "";
-                                if (a < 10)
+                                if (rowNumber < 10)
                                 {
-                                    returnRowNumber = "0" + a;
+                                    returnRowNumber = "0" + rowNumber;
                                 }
                                 else
                                 {
-                                    returnRowNumber = a.ToString();
+                                    returnRowNumber = rowNumber.ToString();
                                 }
                                 //write row to page
                                 row = "<tr class=\"tablerow\"><td class=\"number sorter-false\"> " +
@@ -126,7 +129,7 @@ namespace ClanManager
                                                 "<td> " +
                                                     databaseCharacter.DPS.ToString() +
                                                 @"</td></tr>";
-                                response.Write(row);
+                                    response.Write(row);  
                             }
                             else
                             {

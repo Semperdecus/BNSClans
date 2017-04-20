@@ -118,6 +118,11 @@ namespace ClanManager.scripts.handlers
                     response = "";
                 }
             }
+            else if (recievedValue == "avatars")
+            {
+                string avatarsHTML = Data.selectedClan.AvatarHTMLList(Data.selectedClan.Members);
+                response = avatarsHTML.ToString();
+            }
             context.Response.Write(response);
         }
 
