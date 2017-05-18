@@ -132,6 +132,21 @@ $(document).ajaxStop(function () {
             }
         });
 
+        //choosing data to display
+        $("input[type='checkbox']").change(function () {
+            var val = $(this).val();
+            $("#memberTable tr:first").find("th:eq(" + val + ")").toggle();
+            $("#memberTable tr").each(function () {
+                $(this).find("td:eq(" + val + ")").toggle();
+            });
+            if ($("#memberTable tr:first").find("th:visible").length > 0) {
+                $("#memberTable").removeClass("noborder");
+            }
+            else {
+                $("#memberTable").addClass("noborder");
+            }
+        });
+
         $('#loadingAnimation').hide();
         $('#loadingAnimation2').hide();
         $('#checkboxes').show();
@@ -139,25 +154,9 @@ $(document).ajaxStop(function () {
     }
 });
 
-//choosing data to display
-$("input[type='checkbox']").change(function () {
-    var val = $(this).val();
-    $("#memberTable tr:first").find("th:eq(" + val + ")").toggle();
-    $("#memberTable tr").each(function () {
-        $(this).find("td:eq(" + val + ")").toggle();
-    });
-    if ($("#memberTable tr:first").find("th:visible").length > 0) {
-        $("#memberTable").removeClass("noborder");
-    }
-    else {
-        $("#memberTable").addClass("noborder");
-    }
-});
-
 //clicking the avatar button
 $("#showAvatar").click(function () {
-    if ($('#memberData').is(":hidden"))
-    {
+    if ($('#memberData').is(":hidden")) {
         $(this).css("background-color", "#e7e7ee");
 
         $('#memberData').show();
@@ -166,7 +165,7 @@ $("#showAvatar").click(function () {
     else if ($('#memberAvatars').is(":hidden")) {
         $('#memberAvatars').show();
         $('#memberData').hide();
-        $(this).css("background-color", "#fff666");
+        $(this).css("background-color", "#f6f6f6");
 
     }
 });

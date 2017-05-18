@@ -134,9 +134,9 @@ namespace ClanManager.Models
         {
             string simplifiedLevelName = "";
 
-            if (levelFullName.Contains("Level 50 • "))
+            if (levelFullName.Contains("Level 50 • HongmoonLevel "))
             {
-                simplifiedLevelName = levelFullName.Replace("Level 50 • ", "HM ");
+                simplifiedLevelName = levelFullName.Replace("Level 50 • HongmoonLevel ", "HM ");
             }
             else
             {

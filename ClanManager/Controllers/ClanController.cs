@@ -15,6 +15,8 @@ namespace ClanManager.Controllers
             return View();
         }
 
+
+
         // GET: Clan/Name
         public ActionResult ClanOverview(string id)
         {

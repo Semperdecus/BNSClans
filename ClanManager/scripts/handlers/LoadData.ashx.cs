@@ -71,7 +71,8 @@ namespace ClanManager
                                 //write row to page
                                 row = "<tr class=\"tablerow\"><td class=\"number sorter-false\"> " +
                                                 "</td><td> " +
-                                                    "<a href=\"https://www.bnstree.com/character/eu/" + databaseCharacter.Name + "\">" + databaseCharacter.Name + "</a>" +
+                                                    "<a href=\"http://eu-bns.ncsoft.com/ingame/bs/character/profile?c=" + databaseCharacter.Name + "\"  onclick=\"window.open('http://eu-bns.ncsoft.com/ingame/bs/character/profile?c=" + databaseCharacter.Name + "', 'newwindow', 'width=1100, height=800'); return false; \">" + databaseCharacter.Name + "</a>" +
+                                                    
                                                     //"<a href=\"/Profile/" + databaseCharacter.Name + "\">" + databaseCharacter.Name + "</a>" +
                                                 @"</td>
                                                 <td> " +
@@ -140,7 +141,9 @@ namespace ClanManager
                         {
                             Website.errorLoadingData += 1;
 
-                            row = "<tr class=\"tablerow\"><td class=\"number sorter-false\"> </td><td> " + rdr["Name"].ToString() + " </td>" +
+                            row = "<tr class=\"tablerow\"><td class=\"number sorter-false\"> </td><td> " +
+                                "<a href=\"http://eu-bns.ncsoft.com/ingame/bs/character/profile?c=" + rdr["Name"].ToString() + "\"  onclick=\"window.open('http://eu-bns.ncsoft.com/ingame/bs/character/profile?c=" + rdr["Name"].ToString() + "', 'newwindow', 'width=1100, height=800'); return false; \">" + rdr["Name"].ToString() + "</a>" +
+                                " </td>" +
                                 "<td> </td><td> </td><td> </td><td> </td><td> </td><td> </td></tr>";
 
                             response.Write(row);

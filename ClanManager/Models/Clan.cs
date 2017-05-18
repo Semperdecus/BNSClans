@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 
@@ -275,9 +276,14 @@ namespace ClanManager.Models
             {
                 try
                 {
-                    if (Convert.ToInt32(c.Level) >= 14)
+                    if(c.Level.Contains("Level 50 • HongmoonLevel "))
                     {
-                        result += 1;
+                        string s = c.Level.Replace("Level 50 • HongmoonLevel ", "");
+
+                        if (Convert.ToInt32(s) >= 14)
+                        {
+                            result += 1;
+                        }
                     }
                 }
                 catch
@@ -321,6 +327,9 @@ namespace ClanManager.Models
                     {
                         responseHtml += "<img src= \"" + c.Avatar + "\" title = \"" + c.Name +
                                     "\" \"height = \"310\" width = \"189\" onerror=\"this.style.display='none'\" /> ";
+                        //Below uses a thumbnail if no avatar was uploaded by player
+                        //responseHtml += "<img src= \"" + c.Avatar + "\" title = \"" + c.Name +
+                        //          "\" \"height = \"310\" width = \"189\" onerror=\"this.src='http://static.ncsoft.com/ingame/bns/character_v2/profile/noImg.png'\" /> ";
                     }
                 }
                 catch
@@ -330,6 +339,36 @@ namespace ClanManager.Models
             }
 
             return responseHtml;
+        }
+
+        public List<Bitmap> AvatarBmpList(List<Character> members)
+        {
+            List<Bitmap> responseList = new List<Bitmap>();
+            foreach (Character c in members)
+            {
+                try
+                {
+                    if (c.Avatar != null || c.Avatar == "")
+                    {
+                        System.Net.WebRequest request =
+                            System.Net.WebRequest.Create(
+                            c.Avatar);
+                        System.Net.WebResponse response = request.GetResponse();
+                        System.IO.Stream responseStream =
+                            response.GetResponseStream();
+                        Bitmap bmp = new Bitmap(responseStream);
+                        responseList.Add(bmp);
+                    }
+
+                }
+                catch
+                {
+
+                }
+            }
+
+            return responseList;
+
         }
     }
 }

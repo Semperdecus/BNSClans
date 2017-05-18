@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace ClanManager.Models
@@ -14,11 +15,12 @@ namespace ClanManager.Models
     {
         public static int rowNumber = 0;
         public static Clan selectedClan = new Clan();
-        //private static readonly string DatabaseString = "Server=mssql.fhict.local;Database=dbi340015;User Id=dbi340015;Password=qw12QW!@;";
-        private static readonly string DatabaseString = "Data Source=TERROG;Initial catalog=BNSCharacters;Integrated Security=true";
+        private static readonly string DatabaseString = "Server=mssql.fhict.local;Database=dbi340015;User Id=dbi340015;Password=qw12QW!@;";
+        //private static readonly string DatabaseString = "Data Source=TERROG;Initial catalog=BNSCharacters;Integrated Security=true";
 
-        public static string url = "http://eu-bns.ncsoft.com/ingame/bs/character/profile?c="; //get link
-
+        private static string urlMain = "http://eu-bns.ncsoft.com/ingame/bs/character/profile?c="; //get link
+        private static string urlEquipment = "http://eu-bns.ncsoft.com/ingame/bs/character/data/equipments?c="; //equipment link
+        private static string urlAbilities = "http://eu-bns.ncsoft.com/ingame/bs/character/data/abilities.json?c="; //abilities link
         public static List<string> characternames = new List<string>();
 
         /// <summary>
@@ -67,8 +69,20 @@ namespace ClanManager.Models
         {
             try
             {
-                string html = getHtml(url + name);
-                CQ dom = CQ.Create(html);
+                Task<string>[] taskArray = {
+                    Task<string>.Factory.StartNew(() => getHtml(urlEquipment + name)),
+                    Task<string>.Factory.StartNew(() => getHtml(urlAbilities + name)),
+                    Task<string>.Factory.StartNew(() => getHtml(urlMain + name))
+                };
+                string htmlEquipment = taskArray[0].Result;
+                string htmlAbilities = taskArray[1].Result;
+                string htmlMain = taskArray[2].Result;
+
+                string html = htmlEquipment + " " + htmlAbilities + " " + htmlMain;
+
+                CQ domfull = CQ.CreateDocument(html);
+                CQ dom = domfull.Render(DomRenderingOptions.RemoveComments);
+
                 Character characterData = new Character(name);
 
                 //Read data from HTML page (see CsQuery documentation on how it works)
@@ -76,37 +90,37 @@ namespace ClanManager.Models
                 characterData.Level = dom[".desc li"].Eq(1).Text().Trim(); //Level
                 characterData.Server = dom[".desc li"].Eq(2).Text().Trim(); //server
                 characterData.Clan = dom[".desc li"].Eq(4).Text().Trim(); //clan
-                characterData.Weapon = dom[".wrapWeapon"].Find(".name").Text().Trim(); //Weapon
-                characterData.Earring = dom[".earring"].Find(".name").Text().Trim();
-                characterData.Necklace = dom[".necklace"].Find(".name").Text().Trim();
-                characterData.Bracelet = dom[".bracelet"].Find(".name").Text().Trim();
-                characterData.Ring = dom[".ring"].Find(".name").Text().Trim();
-                characterData.Belt = dom[".belt"].Find(".name").Text().Trim();
-                characterData.Soul = dom[".soul"].Find(".name").Text().Trim();
-                characterData.AP = dom[".stat-point"].Eq(1).Text().Trim(); //AP
-                characterData.CriticalHit = dom[".stat-point"].Eq(21).Text().Trim();
-                characterData.CriticalHitRate = dom[".stat-point"].Eq(24).Text().Trim();
-                characterData.CriticalDmg = dom[".stat-point"].Eq(25).Text().Trim();
-                characterData.CriticalDmgRate = dom[".stat-point"].Eq(28).Text().Trim();
-                characterData.ElementalDmg = ((Convert.ToInt32(dom[".stat-point"].Eq(37).Text().Trim()) +
-                    Convert.ToInt32(dom[".stat-point"].Eq(40).Text().Trim())) / 2).ToString(); //sum of both elemental damage types
-                characterData.HP = dom[".stat-point"].Eq(45).Text().Trim();
-                characterData.Pet = dom[".guard"].Find("name").Text().Trim(); //pet
-                characterData.SoulBadge = dom[".singongpae"].Find("name").Text().Trim();
-                characterData.Piercing = dom[".stat-point"].Eq(10).Text().Trim(); //defence piercing
-                characterData.DPS = Convert.ToInt32(characterData.CalculateDPS(characterData));
-
-                //for reading the avatar I can't read the <img> tag so I just remove data I don't want.
-                //there might a method I'm missing though!
-                string avatar = dom[".charaterView"].Html();
-                if (avatar.Contains("\n\t\t\t<img src=\""))
+                characterData.Weapon = dom[".wrapWeapon"].Find(".name").Text().Replace("Weapon", "").Trim(); //Weapon
+                characterData.Earring = dom[".earring"].Find(".name").Text().Replace("Earring", "").Trim();
+                characterData.Necklace = dom[".necklace"].Find(".name").Text().Replace("Necklace", "").Trim();
+                characterData.Bracelet = dom[".bracelet"].Find(".name").Text().Replace("Bracelet", "").Trim();
+                characterData.Ring = dom[".ring"].Find(".name").Text().Replace("Ring", "").Trim();
+                characterData.Belt = dom[".belt"].Find(".name").Text().Replace("Belt", "").Trim();
+                characterData.Soul = dom[".soul"].Find(".name").Text().Replace("Soul", "").Trim();
+                if(dom[".stat-point"].HasData() == true)
                 {
-                    avatar = avatar.Replace("\n\t\t\t<img src=\"", "");
+                    characterData.AP = dom[".stat-point"].Eq(1).Text().Trim(); //AP
+                    characterData.CriticalHit = dom[".stat-point"].Eq(21).Text().Trim();
+                    characterData.CriticalHitRate = dom[".stat-point"].Eq(24).Text().Trim();
+                    characterData.CriticalDmg = dom[".stat-point"].Eq(25).Text().Trim();
+                    characterData.CriticalDmgRate = dom[".stat-point"].Eq(28).Text().Trim();
+                    characterData.HP = dom[".stat-point"].Eq(45).Text().Trim();
+                    characterData.Pet = dom[".guard"].Find("name").Text().Trim(); //pet
+                    characterData.SoulBadge = dom[".singongpae"].Find("name").Text().Trim();
+                    characterData.Piercing = dom[".stat-point"].Eq(10).Text().Trim(); //defence piercing
+                    characterData.DPS = Convert.ToInt32(characterData.CalculateDPS(characterData));
                 }
-
-                if (avatar.Contains("\">\n\t\t\t\n\t\t"))
+                
+                //for reading the avatar I can't read the <img> tag so I just trim data I don't want. (Trim method won't work here)
+                //there might a method I'm missing though!
+                string avatar = dom[".charaterView"].Html().Trim();
+                if (avatar.Contains("<img src=\""))
                 {
-                    avatar = avatar.Replace("\">\n\t\t\t\n\t\t", "");
+                    avatar = avatar.Replace("<img src=\"", "");
+                }
+                if (avatar.Contains("\" onerror=\"this.src='http://static.ncsoft.com/ingame/bns/character_v2/profile/noImg.png'\" alt>"))
+                {
+                    avatar = avatar.Replace("\" onerror=\"this.src='http://static.ncsoft.com/ingame/bns/character_v2/profile/noImg.png'\" alt>", "");
                 }
 
                 characterData.Avatar = avatar;
