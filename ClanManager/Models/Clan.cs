@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -350,6 +351,7 @@ namespace ClanManager.Models
                 {
                     if (c.Avatar != null || c.Avatar == "")
                     {
+                        
                         System.Net.WebRequest request =
                             System.Net.WebRequest.Create(
                             c.Avatar);
@@ -359,7 +361,6 @@ namespace ClanManager.Models
                         Bitmap bmp = new Bitmap(responseStream);
                         responseList.Add(bmp);
                     }
-
                 }
                 catch
                 {
@@ -368,6 +369,11 @@ namespace ClanManager.Models
             }
 
             return responseList;
+
+        }
+
+        public void DownloadAvatarsZip(List<Character> members)
+        {
 
         }
     }

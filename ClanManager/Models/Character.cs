@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 
@@ -143,6 +144,34 @@ namespace ClanManager.Models
                 simplifiedLevelName = levelFullName;
             }
             return simplifiedLevelName;
+        }
+
+        public Bitmap AvatarBmp(Character c)
+        {
+            Bitmap responseBmp = new Bitmap(378, 620);
+            try
+            {
+                if (c.Avatar != null || c.Avatar == "")
+                {
+                    System.Net.WebRequest request =
+                        System.Net.WebRequest.Create(
+                        c.Avatar);
+                    System.Net.WebResponse response = request.GetResponse();
+                    System.IO.Stream responseStream =
+                        response.GetResponseStream();
+                    Bitmap bmp = new Bitmap(responseStream);
+                    HttpContext.Current.Response.Flush();
+
+                    responseBmp = bmp;
+                }
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            
+            return responseBmp;
+
         }
     }
 }

@@ -15,8 +15,8 @@ namespace ClanManager.Models
     {
         public static int rowNumber = 0;
         public static Clan selectedClan = new Clan();
-        private static readonly string DatabaseString = "Server=mssql.fhict.local;Database=dbi340015;User Id=dbi340015;Password=qw12QW!@;";
-        //private static readonly string DatabaseString = "Data Source=TERROG;Initial catalog=BNSCharacters;Integrated Security=true";
+        //private static readonly string DatabaseString = "Server=mssql.fhict.local;Database=dbi340015;User Id=dbi340015;Password=qw12QW!@;";
+        private static readonly string DatabaseString = "Data Source=TERROG;Initial catalog=BNSCharacters;Integrated Security=true";
 
         private static string urlMain = "http://eu-bns.ncsoft.com/ingame/bs/character/profile?c="; //get link
         private static string urlEquipment = "http://eu-bns.ncsoft.com/ingame/bs/character/data/equipments?c="; //equipment link
