@@ -11,7 +11,10 @@ namespace ClanManager.Models
     public class Website
     {
         Clan selectedClan = Data.selectedClan;
-
+        public int succesZipped { get; set; }
+        public int unsuccesZipped { get; set; }
+        public FileStream zippedFileStream { get; set; }
+        public string filePath { get; set; }
         public Website()
         {
 
@@ -22,6 +25,9 @@ namespace ClanManager.Models
 
         public bool ZipAvatars()
         {
+            string downloadsPath = KnownFolders.GetPath(KnownFolder.Downloads);
+            succesZipped = 0;
+            unsuccesZipped = 0;
             try
             {
                 using (var memoryStream = new MemoryStream())
@@ -30,25 +36,37 @@ namespace ClanManager.Models
                     {
                         foreach (Character c in selectedClan.Members)
                         {
-                            var demoFile = archive.CreateEntry(c.Name + ".png");
-
-                            using (var entryStream = demoFile.Open())
+                            try
                             {
-                                c.AvatarBmp(c).Save(entryStream, ImageFormat.Png);
+                                var demoFile = archive.CreateEntry(c.Name + ".png");
+
+                                using (var entryStream = demoFile.Open())
+                                {
+                                    c.AvatarBmp(c).Save(entryStream, ImageFormat.Png);
+                                    succesZipped += 1;
+                                }
+                            }
+                            catch(Exception e)
+                            {
+                                unsuccesZipped += 1;
+                                //mostly catches 404 not found errors and sometime enumeration errors
                             }
                         }
                     }
-
-                    using (var fileStream = new FileStream(@"C:\Users\Terence\Desktop\" + selectedClan.Name + ".zip", FileMode.Create))
+                    using (var fileStream = new FileStream(downloadsPath + "\\" + selectedClan.Name + ".zip", FileMode.Create))
                     {
+                        
                         memoryStream.Seek(0, SeekOrigin.Begin);
                         memoryStream.CopyTo(fileStream);
+                        zippedFileStream = fileStream;
+                        filePath = downloadsPath + "\\" + selectedClan.Name + ".zip";
                     }
                 }
                 return true;
             }
             catch (Exception e)
             {
+                e.ToString();
                 return false;
             }
         }

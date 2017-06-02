@@ -51,9 +51,16 @@ namespace ClanManager.Controllers
             website = new Website();
 
             if (website.ZipAvatars() == true)
-                Response.Write("succes");
+            {
+                Response.Write("Successfully added " + website.succesZipped + " avatars, unsuccessfully added " + website.unsuccesZipped + " avatars." + Environment.NewLine +
+                    "Saved to location: " + website.filePath);
+                //return File(website.zippedFileStream, "application/zip");
+            }
             else
+            {
                 Response.Write("Error, try again later");
+                //return RedirectToAction("clanoverview", "Clan", new { id = Data.selectedClan.Name });
+            }
 
         }
 

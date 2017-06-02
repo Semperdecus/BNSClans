@@ -37,7 +37,7 @@ namespace ClanManager.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(Character newmembers)
+        public ActionResult ClanOverview(Character newmembers)
         {
             string rawText = newmembers.Name;
 
@@ -51,10 +51,22 @@ namespace ClanManager.Controllers
                 Character newMember = Data.getAllPlayerDataTrimmed(s);
                 if (newMember != null)
                 {
-                    //this method might throw
+                    //try to add player
                     if (Data.addMember(newMember.Name, newMember.Clan) == true && newMember.Clan.ToLower() == Data.selectedClan.Name.ToLower())
                     {
                         resultAdded += 1;
+                    }
+                    //if player is already in database update their clan
+                    else if (Data.addMember(newMember.Name, newMember.Clan) == false)
+                    {
+                        if(Data.updateClan(newMember.Name, newMember.Clan) == true)
+                        {
+                            resultAdded += 1;
+                        }
+                        else
+                        {
+                            resultnotAdded += 1;
+                        }
                     }
                     else
                     {
@@ -67,6 +79,7 @@ namespace ClanManager.Controllers
                 }
             }
             return View();
+            //Nog toevoegen: viewbag meegeven hoeveel toegevoegd/veranderd
         }
     }
 }

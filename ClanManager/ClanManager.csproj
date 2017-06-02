@@ -204,6 +204,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\CharacterRawJSONData.cs" />
+    <Compile Include="Models\KnownFolders.cs" />
     <Compile Include="Models\Website.cs" />
     <Compile Include="scripts\handlers\ClanSummaryData.ashx.cs">
       <DependentUpon>ClanSummaryData.ashx</DependentUpon>

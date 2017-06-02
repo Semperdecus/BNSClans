@@ -8,6 +8,7 @@ document.getElementById('default').checked = true;
 $(document).one('ready', function (total) {
     $('#checkboxes').hide();
     $('#memberAvatars').hide();
+    $('#avatardownload').hide();
 
     //returnvar has the amount of members saved (needed for the loop)
     $.get(location.protocol + "//" + location.host + "/scripts/handlers/ReturnRows.ashx", function (returnvar) {
@@ -149,8 +150,10 @@ $(document).ajaxStop(function () {
 
         $('#loadingAnimation').hide();
         $('#loadingAnimation2').hide();
-        $('#checkboxes').show();
+        $('#loadingAnimation3').hide();
 
+        $('#checkboxes').show();
+        $('#avatardownload').show();
     }
 });
 

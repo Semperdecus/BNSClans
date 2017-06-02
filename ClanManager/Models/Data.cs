@@ -69,6 +69,8 @@ namespace ClanManager.Models
         {
             try
             {
+                
+
                 Task<string>[] taskArray = {
                     Task<string>.Factory.StartNew(() => getHtml(urlEquipment + name)),
                     Task<string>.Factory.StartNew(() => getHtml(urlAbilities + name)),
