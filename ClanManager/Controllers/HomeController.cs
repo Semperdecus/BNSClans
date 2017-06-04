@@ -28,6 +28,16 @@ namespace ClanManager.Controllers
         }
 
         [HttpPost]
+        public ActionResult Clans(Clan clan)
+        {
+            List<Character> emptylist = new List<Character>();
+            emptylist.Add(new Character());
+            Data.selectedClan = new Clan(clan.Name, emptylist);
+            emptylist.Clear();
+            return RedirectToAction("clanoverview", "Clan", new { id = clan.Name });
+        }
+
+        [HttpPost]
         public ActionResult Index(Clan clan)
         {
             List<Character> emptylist = new List<Character>();

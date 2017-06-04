@@ -11,7 +11,7 @@ namespace ClanManager.scripts.handlers
     /// </summary>
     public class ClanSummaryData : IHttpHandler
     {
-
+        Clan selectedclan = Data.selectedClan;
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
@@ -22,88 +22,103 @@ namespace ClanManager.scripts.handlers
             //loop that returns stuff depending on what was recieved
             if (recievedValue == "ap")
             {
-                double avgAP = Math.Round(Data.selectedClan.AverageAP(Data.selectedClan.Members), 2);
+                double avgAP = Math.Round(selectedclan.AverageAP(selectedclan.Members), 2);
+                selectedclan.averageAP = avgAP;
                 response = avgAP.ToString();
             }
             else if (recievedValue == "level")
             {
-                double avgLvl = Math.Round(Data.selectedClan.AverageHMLevel(Data.selectedClan.Members), 2);
+                double avgLvl = Math.Round(selectedclan.AverageHMLevel(selectedclan.Members), 2);
+                selectedclan.averageLevel = avgLvl;
                 response = avgLvl.ToString();
             }
             else if (recievedValue == "score")
             {
-                double avgScore = Math.Round(Data.selectedClan.AverageScore(Data.selectedClan.Members), 2);
+                double avgScore = Math.Round(selectedclan.AverageScore(selectedclan.Members), 2);
+                selectedclan.averageScore = avgScore;
                 response = avgScore.ToString();
             }
             else if (recievedValue == "server")
             {
-                string server = Data.selectedClan.ServerGroup(Data.selectedClan.Members);
+                string server = selectedclan.ServerGroup(selectedclan.Members);
+                selectedclan.server = server;
                 response = server;
             }
             
             else if (recievedValue == "sin")
             {
-                int classCount = Data.selectedClan.ClassAmount(Data.selectedClan.Members, "Assassin");
+                int classCount = selectedclan.ClassAmount(selectedclan.Members, "Assassin");
+                selectedclan.assassins = classCount;
                 response = classCount.ToString();
             }
             else if (recievedValue == "bd")
             {
-                int classCount = Data.selectedClan.ClassAmount(Data.selectedClan.Members, "Blade Dancer");
+                int classCount = selectedclan.ClassAmount(selectedclan.Members, "Blade Dancer");
+                selectedclan.bladeDancers = classCount;
                 response = classCount.ToString();
             }
             else if (recievedValue == "bm")
             {
-                int classCount = Data.selectedClan.ClassAmount(Data.selectedClan.Members, "Blade Master");
+                int classCount = selectedclan.ClassAmount(selectedclan.Members, "Blade Master");
+                selectedclan.bladeMasters = classCount;
                 response = classCount.ToString();
             }
             else if (recievedValue == "des")
             {
-                int classCount = Data.selectedClan.ClassAmount(Data.selectedClan.Members, "Destroyer");
+                int classCount = selectedclan.ClassAmount(selectedclan.Members, "Destroyer");
+                selectedclan.destroyers = classCount;
                 response = classCount.ToString();
             }
             else if (recievedValue == "fm")
             {
-                int classCount = Data.selectedClan.ClassAmount(Data.selectedClan.Members, "Force Master");
+                int classCount = selectedclan.ClassAmount(selectedclan.Members, "Force Master");
+                selectedclan.forceMasters = classCount;
                 response = classCount.ToString();
             }
             else if (recievedValue == "kfm")
             {
-                int classCount = Data.selectedClan.ClassAmount(Data.selectedClan.Members, "Kung Fu Master");
+                int classCount = selectedclan.ClassAmount(selectedclan.Members, "Kung Fu Master");
+                selectedclan.kungFuMasters = classCount;
                 response = classCount.ToString();
             }
             else if (recievedValue == "sf")
             {
-                int classCount = Data.selectedClan.ClassAmount(Data.selectedClan.Members, "Soul Fighter");
+                int classCount = selectedclan.ClassAmount(selectedclan.Members, "Soul Fighter");
+                selectedclan.soulFighters = classCount;
                 response = classCount.ToString();
             }
             else if (recievedValue == "sum")
             {
-                int classCount = Data.selectedClan.ClassAmount(Data.selectedClan.Members, "Summoner");
+                int classCount = selectedclan.ClassAmount(selectedclan.Members, "Summoner");
+                selectedclan.summoners = classCount;
                 response = classCount.ToString();
             }
             else if (recievedValue == "wl")
             {
-                int classCount = Data.selectedClan.ClassAmount(Data.selectedClan.Members, "Warlock");
+                int classCount = selectedclan.ClassAmount(selectedclan.Members, "Warlock");
+                selectedclan.warlocks = classCount;
                 response = classCount.ToString();
             }
             else if (recievedValue == "maxlevel")
             {
-                int maxlevel = Data.selectedClan.Hongmoon15Amount(Data.selectedClan.Members);
+                int maxlevel = selectedclan.Hongmoon15Amount(selectedclan.Members);
                 response = maxlevel.ToString();
             }
             else if (recievedValue == "chokma")
             {
-                int chokma = Data.selectedClan.ChokmaAmount(Data.selectedClan.Members);
+                int chokma = selectedclan.ChokmaAmount(selectedclan.Members);
+                selectedclan.chokmaAmount = chokma;
                 response = chokma.ToString();
             }
             else if (recievedValue == "unleashedpet")
             {
-                int unleashedpet = Data.selectedClan.UnleashedPetAmount(Data.selectedClan.Members);
+                int unleashedpet = selectedclan.UnleashedPetAmount(selectedclan.Members);
                 response = unleashedpet.ToString();
             }
             else if (recievedValue == "truesoul")
             {
-                int truesoul = Data.selectedClan.TrueSoulAmount(Data.selectedClan.Members);
+                int truesoul = selectedclan.TrueSoulAmount(selectedclan.Members);
+                selectedclan.truesoulAmount = truesoul;
                 response = truesoul.ToString();
             }
             //returns the amount of F2 pages which couldn't be opened
@@ -120,8 +135,24 @@ namespace ClanManager.scripts.handlers
             }
             else if (recievedValue == "avatars")
             {
-                string avatarsHTML = Data.selectedClan.AvatarHTMLList(Data.selectedClan.Members);
+                string avatarsHTML = selectedclan.AvatarHTMLList(selectedclan.Members);
                 response = avatarsHTML.ToString();
+            }
+            else if (recievedValue == "updateDatabase")
+            {
+                selectedclan.memberAmount = selectedclan.Members.Count();
+
+                if (Data.updateClanDetails(selectedclan.Name, selectedclan.averageAP, selectedclan.averageLevel, selectedclan.averageScore,
+                    selectedclan.truesoulAmount, selectedclan.chokmaAmount, selectedclan.memberAmount, selectedclan.summoners, selectedclan.warlocks,
+                    selectedclan.soulFighters, selectedclan.destroyers, selectedclan.bladeDancers, selectedclan.bladeMasters, selectedclan.forceMasters,
+                    selectedclan.kungFuMasters, selectedclan.assassins, selectedclan.server))
+                {
+                    response = "Data for " + selectedclan.Name + " has been updated.";
+                }
+                else
+                {
+                    response = "Error updating data for " + selectedclan.Name + ".";
+                }
             }
             context.Response.Write(response);
         }

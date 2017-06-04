@@ -1,4 +1,5 @@
 ﻿using CsQuery;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -69,18 +70,18 @@ namespace ClanManager.Models
         {
             try
             {
-                
-
                 Task<string>[] taskArray = {
                     Task<string>.Factory.StartNew(() => getHtml(urlEquipment + name)),
                     Task<string>.Factory.StartNew(() => getHtml(urlAbilities + name)),
                     Task<string>.Factory.StartNew(() => getHtml(urlMain + name))
                 };
                 string htmlEquipment = taskArray[0].Result;
-                string htmlAbilities = taskArray[1].Result;
+                string htmlAbilitiesJSON = taskArray[1].Result;
                 string htmlMain = taskArray[2].Result;
 
-                string html = htmlEquipment + " " + htmlAbilities + " " + htmlMain;
+                CharacterRawJSONData characterDataJSON = JsonConvert.DeserializeObject<CharacterRawJSONData>(htmlAbilitiesJSON);
+                double test = characterDataJSON.records.total_ability.abnormal_attack_power_rate;
+                string html = htmlEquipment + " " + htmlMain;
 
                 CQ domfull = CQ.CreateDocument(html);
                 CQ dom = domfull.Render(DomRenderingOptions.RemoveComments);
@@ -99,19 +100,149 @@ namespace ClanManager.Models
                 characterData.Ring = dom[".ring"].Find(".name").Text().Replace("Ring", "").Trim();
                 characterData.Belt = dom[".belt"].Find(".name").Text().Replace("Belt", "").Trim();
                 characterData.Soul = dom[".soul"].Find(".name").Text().Replace("Soul", "").Trim();
-                if(dom[".stat-point"].HasData() == true)
-                {
-                    characterData.AP = dom[".stat-point"].Eq(1).Text().Trim(); //AP
-                    characterData.CriticalHit = dom[".stat-point"].Eq(21).Text().Trim();
-                    characterData.CriticalHitRate = dom[".stat-point"].Eq(24).Text().Trim();
-                    characterData.CriticalDmg = dom[".stat-point"].Eq(25).Text().Trim();
-                    characterData.CriticalDmgRate = dom[".stat-point"].Eq(28).Text().Trim();
-                    characterData.HP = dom[".stat-point"].Eq(45).Text().Trim();
-                    characterData.Pet = dom[".guard"].Find("name").Text().Trim(); //pet
-                    characterData.SoulBadge = dom[".singongpae"].Find("name").Text().Trim();
-                    characterData.Piercing = dom[".stat-point"].Eq(10).Text().Trim(); //defence piercing
-                    characterData.DPS = Convert.ToInt32(characterData.CalculateDPS(characterData));
-                }
+                characterData.Pet = dom[".guard"].Find("name").Text().Trim(); //pet
+                characterData.SoulBadge = dom[".singongpae"].Find("name").Text().Trim();
+
+                characterData.AP = characterDataJSON.records.total_ability.attack_power_value.ToString(); //AP
+                characterData.CriticalHit = characterDataJSON.records.total_ability.attack_critical_value.ToString();
+                characterData.CriticalHitRate = characterDataJSON.records.total_ability.attack_critical_rate.ToString();
+                characterData.CriticalDmg = characterDataJSON.records.total_ability.attack_critical_damage_value.ToString();
+                characterData.CriticalDmgRate = characterDataJSON.records.total_ability.attack_critical_damage_rate.ToString();
+                characterData.HP = characterDataJSON.records.total_ability.int_max_hp.ToString();
+
+                characterData.Piercing = characterDataJSON.records.total_ability.attack_pierce_value.ToString();
+
+                #region determine which element character is using and add elemental damage
+                if (characterData.Class == "Summoner")
+                    //earth summoner
+                    if (characterDataJSON.records.total_ability.attack_attribute_earth_value > characterDataJSON.records.total_ability.attack_attribute_wind_value)
+                    {
+                        characterData.ElementalDmg = characterDataJSON.records.total_ability.attack_attribute_earth_value.ToString();
+                        characterData.ElementalDmgRate = characterDataJSON.records.total_ability.attack_attribute_earth_rate.ToString();
+                        characterData.usingElement = "Earth";
+                    }
+                    else
+                    {
+                        characterData.ElementalDmg = characterDataJSON.records.total_ability.attack_attribute_wind_value.ToString();
+                        characterData.ElementalDmgRate = characterDataJSON.records.total_ability.attack_attribute_wind_rate.ToString();
+                        characterData.usingElement = "Wind";
+                    }
+                else if (characterData.Class == "Warlock")
+                    //void > ice
+                    if (characterDataJSON.records.total_ability.attack_attribute_void_value > characterDataJSON.records.total_ability.attack_attribute_ice_value)
+                    {
+                        characterData.ElementalDmg = characterDataJSON.records.total_ability.attack_attribute_void_value.ToString();
+                        characterData.ElementalDmgRate = characterDataJSON.records.total_ability.attack_attribute_void_rate.ToString();
+                        characterData.usingElement = "Shadow";
+                    }
+                    else
+                    {
+                        characterData.ElementalDmg = characterDataJSON.records.total_ability.attack_attribute_ice_value.ToString();
+                        characterData.ElementalDmgRate = characterDataJSON.records.total_ability.attack_attribute_ice_rate.ToString();
+                        characterData.usingElement = "Ice";
+                    }
+                else if (characterData.Class == "Destroyer")
+                    //earth summoner
+                    if (characterDataJSON.records.total_ability.attack_attribute_earth_value > characterDataJSON.records.total_ability.attack_attribute_void_value)
+                    {
+                        characterData.ElementalDmg = characterDataJSON.records.total_ability.attack_attribute_earth_value.ToString();
+                        characterData.ElementalDmgRate = characterDataJSON.records.total_ability.attack_attribute_earth_rate.ToString();
+                        characterData.usingElement = "Earth";
+                    }
+                    else
+                    {
+                        characterData.ElementalDmg = characterDataJSON.records.total_ability.attack_attribute_void_value.ToString();
+                        characterData.ElementalDmgRate = characterDataJSON.records.total_ability.attack_attribute_void_rate.ToString();
+                        characterData.usingElement = "Shadow";
+                    }
+                else if (characterData.Class == "Assassin")
+                    //earth summoner
+                    if (characterDataJSON.records.total_ability.attack_attribute_lightning_value > characterDataJSON.records.total_ability.attack_attribute_void_value)
+                    {
+                        characterData.ElementalDmg = characterDataJSON.records.total_ability.attack_attribute_lightning_value.ToString();
+                        characterData.ElementalDmgRate = characterDataJSON.records.total_ability.attack_attribute_lightning_rate.ToString();
+                        characterData.usingElement = "Lightning";
+                    }
+                    else
+                    {
+                        characterData.ElementalDmg = characterDataJSON.records.total_ability.attack_attribute_void_value.ToString();
+                        characterData.ElementalDmgRate = characterDataJSON.records.total_ability.attack_attribute_void_rate.ToString();
+                        characterData.usingElement = "Shadow";
+                    }
+                else if (characterData.Class == "Blade Dancer")
+                    //earth summoner
+                    if (characterDataJSON.records.total_ability.attack_attribute_lightning_value > characterDataJSON.records.total_ability.attack_attribute_wind_value)
+                    {
+                        characterData.ElementalDmg = characterDataJSON.records.total_ability.attack_attribute_lightning_value.ToString();
+                        characterData.ElementalDmgRate = characterDataJSON.records.total_ability.attack_attribute_lightning_rate.ToString();
+                        characterData.usingElement = "Lightning";
+                    }
+                    else
+                    {
+                        characterData.ElementalDmg = characterDataJSON.records.total_ability.attack_attribute_wind_value.ToString();
+                        characterData.ElementalDmgRate = characterDataJSON.records.total_ability.attack_attribute_wind_rate.ToString();
+                        characterData.usingElement = "Wind";
+                    }
+                else if (characterData.Class == "Blade Master")
+                    //earth summoner
+                    if (characterDataJSON.records.total_ability.attack_attribute_lightning_value > characterDataJSON.records.total_ability.attack_attribute_fire_value)
+                    {
+                        characterData.ElementalDmg = characterDataJSON.records.total_ability.attack_attribute_lightning_value.ToString();
+                        characterData.ElementalDmgRate = characterDataJSON.records.total_ability.attack_attribute_lightning_rate.ToString();
+                        characterData.usingElement = "Lightning";
+                    }
+                    else
+                    {
+                        characterData.ElementalDmg = characterDataJSON.records.total_ability.attack_attribute_fire_value.ToString();
+                        characterData.ElementalDmgRate = characterDataJSON.records.total_ability.attack_attribute_fire_rate.ToString();
+                        characterData.usingElement = "Fire";
+                    }
+                else if (characterData.Class == "Force Master")
+                    //earth summoner
+                    if (characterDataJSON.records.total_ability.attack_attribute_ice_value > characterDataJSON.records.total_ability.attack_attribute_fire_value)
+                    {
+                        characterData.ElementalDmg = characterDataJSON.records.total_ability.attack_attribute_ice_value.ToString();
+                        characterData.ElementalDmgRate = characterDataJSON.records.total_ability.attack_attribute_ice_rate.ToString();
+                        characterData.usingElement = "Ice";
+                    }
+                    else
+                    {
+                        characterData.ElementalDmg = characterDataJSON.records.total_ability.attack_attribute_fire_value.ToString();
+                        characterData.ElementalDmgRate = characterDataJSON.records.total_ability.attack_attribute_fire_rate.ToString();
+                        characterData.usingElement = "Fire";
+                    }
+                else if (characterData.Class == "Soul Fighter")
+                    //earth summoner
+                    if (characterDataJSON.records.total_ability.attack_attribute_ice_value > characterDataJSON.records.total_ability.attack_attribute_earth_value)
+                    {
+                        characterData.ElementalDmg = characterDataJSON.records.total_ability.attack_attribute_ice_value.ToString();
+                        characterData.ElementalDmgRate = characterDataJSON.records.total_ability.attack_attribute_ice_rate.ToString();
+                        characterData.usingElement = "Ice";
+                    }
+                    else
+                    {
+                        characterData.ElementalDmg = characterDataJSON.records.total_ability.attack_attribute_earth_value.ToString();
+                        characterData.ElementalDmgRate = characterDataJSON.records.total_ability.attack_attribute_earth_rate.ToString();
+                        characterData.usingElement = "Earth";
+                    }
+                else if (characterData.Class == "Kung Fu Master")
+                    //earth summoner
+                    if (characterDataJSON.records.total_ability.attack_attribute_wind_value > characterDataJSON.records.total_ability.attack_attribute_fire_value)
+                    {
+                        characterData.ElementalDmg = characterDataJSON.records.total_ability.attack_attribute_wind_value.ToString();
+                        characterData.ElementalDmgRate = characterDataJSON.records.total_ability.attack_attribute_wind_rate.ToString();
+                        characterData.usingElement = "Wind";
+                    }
+                    else
+                    {
+                        characterData.ElementalDmg = characterDataJSON.records.total_ability.attack_attribute_fire_value.ToString();
+                        characterData.ElementalDmgRate = characterDataJSON.records.total_ability.attack_attribute_fire_rate.ToString();
+                        characterData.usingElement = "Fire";
+                    }
+                #endregion
+
+                characterData.DPS = Convert.ToInt32(characterData.CalculateDPS(characterData));
+
                 
                 //for reading the avatar I can't read the <img> tag so I just trim data I don't want. (Trim method won't work here)
                 //there might a method I'm missing though!
@@ -131,7 +262,7 @@ namespace ClanManager.Models
             }
             catch { return new Character(name); }
         }
-
+        
         public static SqlConnection Connection
         {
             get
@@ -171,7 +302,7 @@ namespace ClanManager.Models
                             }
                             else
                             {
-                                Data.updateClan(databaseCharacter.Name.ToLower(), databaseCharacter.Clan.ToLower());
+                                Data.updateCharacterClan(databaseCharacter.Name.ToLower(), databaseCharacter.Clan.ToLower());
                             }
                         }
                         catch
@@ -183,7 +314,8 @@ namespace ClanManager.Models
             }
             return returnList;
         }
-        public static bool updateClan(string name, string newClan)
+
+        public static bool updateCharacterClan(string name, string newClan)
         {
             string query = @"UPDATE Character 
                             SET Clan = @newClanQuery
@@ -202,6 +334,128 @@ namespace ClanManager.Models
                         {
                             return true;
                         }
+                        return false;
+                    }
+                }
+            }
+        }
+
+        public static bool updateClanDetails(string clanName, double averageAP, double averageLevel, double averageScore, 
+            int truesoulAmount, int chokmaAmount, int members, int summoners, int warlocks, int soulFighters, int destroyers, 
+            int bladeDancers, int bladeMasters, int forceMasters, int kungFuMasters, int assassins, string server)
+        {
+            bool clanExists = false;
+
+            string clancheckQuery = @"Select * from Clan Where name = @nameQuery";
+            using (SqlConnection conn = Data.Connection)
+            {
+                using (SqlCommand cmd = new SqlCommand(clancheckQuery, conn))
+                {
+                    cmd.Parameters.Add(new SqlParameter("nameQuery", clanName));
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            clanExists = true;
+                        }
+                    }
+                }
+            }
+
+            if (clanExists == true)
+            {
+                string query = @"UPDATE Clan 
+                    SET averageAP = @averageAPQuery, averageLevel = @averageLevelQuery, averageScore = @averageScoreQuery, 
+                    truesoulAmount = @truesoulQuery, chokmaAmount = @chokmaQuery, members = @memberQuery, 
+                    summoners = @sumQuery, warlocks = @wlQuery, soulFighters = @sfQuery, destroyers = @desQuery, 
+                    bladeDancers = @bdQuery, bladeMasters = @bmQuery, forceMasters = @fmQuery, kungFuMasters = @kfmQuery, 
+                    assassins = @sinQuery, serverGroup = @serverQuery
+                    WHERE LOWER(name) = @nameQuery";
+
+                using (SqlConnection conn = Data.Connection)
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new SqlParameter("nameQuery", clanName));
+                        cmd.Parameters.Add(new SqlParameter("averageAPQuery", averageAP));
+                        cmd.Parameters.Add(new SqlParameter("averageLevelQuery", averageLevel));
+                        cmd.Parameters.Add(new SqlParameter("averageScoreQuery", averageScore));
+                        cmd.Parameters.Add(new SqlParameter("truesoulQuery", truesoulAmount));
+                        cmd.Parameters.Add(new SqlParameter("chokmaQuery", chokmaAmount));
+                        cmd.Parameters.Add(new SqlParameter("memberQuery", members));
+                        cmd.Parameters.Add(new SqlParameter("sumQuery", summoners));
+                        cmd.Parameters.Add(new SqlParameter("wlQuery", warlocks));
+                        cmd.Parameters.Add(new SqlParameter("sfQuery", soulFighters));
+                        cmd.Parameters.Add(new SqlParameter("desQuery", destroyers));
+                        cmd.Parameters.Add(new SqlParameter("bdQuery", bladeDancers));
+                        cmd.Parameters.Add(new SqlParameter("bmQuery", bladeMasters));
+                        cmd.Parameters.Add(new SqlParameter("fmQuery", forceMasters));
+                        cmd.Parameters.Add(new SqlParameter("kfmQuery", kungFuMasters));
+                        cmd.Parameters.Add(new SqlParameter("sinQuery", assassins));
+                        cmd.Parameters.Add(new SqlParameter("serverQuery", server));
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {                          
+                            return true;
+                        }
+                    }
+                }
+            }
+            else if (clanExists == false)
+            {
+                if(addClanToDatabase(clanName, averageAP, averageLevel, averageScore, truesoulAmount, chokmaAmount, members, summoners,
+                    warlocks, soulFighters, destroyers, bladeDancers, bladeMasters, forceMasters, kungFuMasters, assassins, server))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        public static bool addClanToDatabase(string clanName, double averageAP, double averageLevel, double averageScore,
+            int truesoulAmount, int chokmaAmount, int members, int summoners, int warlocks, int soulFighters, int destroyers,
+            int bladeDancers, int bladeMasters, int forceMasters, int kungFuMasters, int assassins, string server)
+        {
+            string query = @"INSERT INTO [Clan](name, averageAP, averageLevel, averageScore, truesoulAmount, chokmaAmount, members, summoners,
+                            warlocks, soulFighters, destroyers, bladeDancers, bladeMasters, forceMasters, kungFuMasters, assassins, serverGroup) VALUES
+                            (@nameQuery, @averageAPQuery, @averageLevelQuery, @averageScoreQuery, @truesoulQuery, @chokmaQuery, @memberQuery, 
+                            @sumQuery, @wlQuery, @sfQuery, @desQuery, @bdQuery, @bmQuery, @fmQuery, @kfmQuery, @sinQuery, @serverQuery)";
+
+            using (SqlConnection conn = Data.Connection)
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.Add(new SqlParameter("nameQuery", clanName));
+                    cmd.Parameters.Add(new SqlParameter("averageAPQuery", averageAP));
+                    cmd.Parameters.Add(new SqlParameter("averageLevelQuery", averageLevel));
+                    cmd.Parameters.Add(new SqlParameter("averageScoreQuery", averageScore));
+                    cmd.Parameters.Add(new SqlParameter("truesoulQuery", truesoulAmount));
+                    cmd.Parameters.Add(new SqlParameter("chokmaQuery", chokmaAmount));
+                    cmd.Parameters.Add(new SqlParameter("memberQuery", members));
+                    cmd.Parameters.Add(new SqlParameter("sumQuery", summoners));
+                    cmd.Parameters.Add(new SqlParameter("wlQuery", warlocks));
+                    cmd.Parameters.Add(new SqlParameter("sfQuery", soulFighters));
+                    cmd.Parameters.Add(new SqlParameter("desQuery", destroyers));
+                    cmd.Parameters.Add(new SqlParameter("bdQuery", bladeDancers));
+                    cmd.Parameters.Add(new SqlParameter("bmQuery", bladeMasters));
+                    cmd.Parameters.Add(new SqlParameter("fmQuery", forceMasters));
+                    cmd.Parameters.Add(new SqlParameter("kfmQuery", kungFuMasters));
+                    cmd.Parameters.Add(new SqlParameter("sinQuery", assassins));
+                    cmd.Parameters.Add(new SqlParameter("serverQuery", server));
+
+                    if(members > 0)
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
                         return false;
                     }
                 }
@@ -229,6 +483,55 @@ namespace ClanManager.Models
                     catch
                     {
                         return false;
+                    }
+                }
+            }
+        }
+
+        public static List<string> selectTop10Clan(string columnName, string groupNumber, string topX)
+        {
+            string query = "";
+            List<string> returnList = new List<string>();
+            if(groupNumber != "")
+            {
+                query = "select top (" + topX + ") " + columnName + ", name from Clan " +
+                "where serverGroup LIKE '%Group " + groupNumber + "%' " +
+                "order by " + columnName + " desc";
+            }
+            else
+            {
+                query = "select top (" + topX + ") " + columnName + ", name from Clan " +
+                "order by " + columnName + " desc";
+            }
+
+
+            using (SqlConnection conn = Data.Connection)
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    try
+                    {
+
+                    
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                string result = "";
+                                string clanname = reader["name"].ToString();
+                                string amount = reader[columnName].ToString();
+                                result = clanname + " - " + amount;
+
+                                returnList.Add(result);
+                            }
+
+                            return returnList;
+                        }
+
+                    }
+                    catch
+                    {
+                        throw new Exception("Error collecting data.");
                     }
                 }
             }

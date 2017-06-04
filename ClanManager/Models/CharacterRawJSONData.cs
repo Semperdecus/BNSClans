@@ -7,6 +7,13 @@ namespace ClanManager.Models
 {
     public class CharacterRawJSONData
     {
+        public Records records { get; set; }
+
+        public CharacterRawJSONData(Records r)
+        {
+            this.records = r;
+        }
+        [Serializable]
         public class BaseAbility
         {
             public double attack_power_value { get; set; }
@@ -113,7 +120,7 @@ namespace ClanManager.Models
             public int int_heal_power_value { get; set; }
             public int int_heal_power_diff { get; set; }
         }
-
+        [Serializable]
         public class EquippedAbility
         {
             public double attack_power_value { get; set; }
@@ -220,7 +227,7 @@ namespace ClanManager.Models
             public int int_heal_power_value { get; set; }
             public int int_heal_power_diff { get; set; }
         }
-
+        [Serializable]
         public class TotalAbility
         {
             public double attack_power_value { get; set; }
@@ -327,7 +334,7 @@ namespace ClanManager.Models
             public int int_heal_power_value { get; set; }
             public int int_heal_power_diff { get; set; }
         }
-
+        [Serializable]
         public class PointAbility
         {
             public int offense_point { get; set; }
@@ -337,7 +344,7 @@ namespace ClanManager.Models
             public int max_hp { get; set; }
             public int defend_power_value { get; set; }
         }
-
+        [Serializable]
         public class Records
         {
             public BaseAbility base_ability { get; set; }
@@ -346,6 +353,7 @@ namespace ClanManager.Models
             public PointAbility point_ability { get; set; }
         }
 
+        [Serializable]
         public class RootObject
         {
             public Records records { get; set; }

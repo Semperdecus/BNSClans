@@ -124,6 +124,11 @@ $(document).ajaxStop(function () {
     }
 
     if (ajaxCount == 2) {
+        //update database clan data
+        $.get(location.protocol + "//" + location.host + "/scripts/handlers/ClanSummaryData.ashx?value=updateDatabase", function (html) {
+            $("#dataBaseStatus").text(html);
+        });
+
         $("#memberTable").tablesorter({
             //disable sorting first header
             headers: {

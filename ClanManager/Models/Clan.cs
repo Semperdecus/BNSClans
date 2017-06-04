@@ -11,6 +11,23 @@ namespace ClanManager.Models
     {
         public string Name { get; set; }
         public List<Character> Members { get; set; }
+        public string clanName { get; set; }
+        public double averageAP { get; set; }
+        public double averageLevel { get; set; }
+        public double averageScore { get; set; }
+        public int truesoulAmount { get; set; }
+        public int chokmaAmount { get; set; }
+        public int memberAmount { get; set; }
+        public int summoners { get; set; }
+        public int warlocks { get; set; }
+        public int soulFighters { get; set; }
+        public int destroyers { get; set; }
+        public int bladeDancers { get; set; }
+        public int bladeMasters { get; set; }
+        public int forceMasters { get; set; }
+        public int kungFuMasters { get; set; }
+        public int assassins { get; set; }
+        public string server { get; set; }
 
         public Clan(string name, List<Character> members)
         {
@@ -40,20 +57,29 @@ namespace ClanManager.Models
         {
             //only works on simplified level names 
             double result = 0.00;
+            string resultLevel;
+            int amountOfMembers = members.Count;
             foreach (Character c in members)
             {
-                if (c.Level != null && c.Level.Contains("Level 50 • Level ") )
+                if (c.Level != null && c.Level.Contains("Level 50 • HongmoonLevel ") )
                 {
-                    c.Level = c.Level.Replace("Level 50 • Level ", "");
+                    resultLevel = c.Level.Replace("Level 50 • HongmoonLevel ", "");
                 }
                 else
                 {
-                    return result;
+                    resultLevel = "0";
                 }
-                result += Convert.ToDouble(c.Level);
+                try
+                {
+                    result += Convert.ToDouble(resultLevel);
+                }
+                catch
+                {
+                    amountOfMembers -= 1;
+                }
             }
 
-            result = result / members.Count();
+            result = result / amountOfMembers;
 
             return result;
         }
@@ -155,9 +181,9 @@ namespace ClanManager.Models
 
             //if there's x or more people in a certain server group return that group. 
             //Prevents problems with mass server changes etc.
-            int numberVerifier = 2;
+            int numberVerifier = 1;
             #region check which group the clan members are located in return result
-            if(naGroup1 > 2)
+            if(naGroup1 > numberVerifier)
             {
                 result = "[NA]Group 1: Master Hong, Gunma, Taywong";
             }
@@ -281,7 +307,7 @@ namespace ClanManager.Models
                     {
                         string s = c.Level.Replace("Level 50 • HongmoonLevel ", "");
 
-                        if (Convert.ToInt32(s) >= 14)
+                        if (Convert.ToInt32(s) >= 15)
                         {
                             result += 1;
                         }
@@ -369,11 +395,6 @@ namespace ClanManager.Models
             }
 
             return responseList;
-
-        }
-
-        public void DownloadAvatarsZip(List<Character> members)
-        {
 
         }
     }

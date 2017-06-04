@@ -35,6 +35,7 @@ namespace ClanManager.Models
         public string Piercing { get; set; }
         public int DPS { get; set; }
 
+        public string usingElement { get; set; }
         public Character(string name, string rank, string eclass, string ap, string hp, string level,
             string weapon, string earring, string necklace, string bracelet, string ring,
             string belt, string soul, string avatar, string pet, string soulbadge, string criticalhit,

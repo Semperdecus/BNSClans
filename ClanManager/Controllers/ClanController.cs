@@ -59,7 +59,7 @@ namespace ClanManager.Controllers
                     //if player is already in database update their clan
                     else if (Data.addMember(newMember.Name, newMember.Clan) == false)
                     {
-                        if(Data.updateClan(newMember.Name, newMember.Clan) == true)
+                        if(Data.updateCharacterClan(newMember.Name, newMember.Clan) == true)
                         {
                             resultAdded += 1;
                         }

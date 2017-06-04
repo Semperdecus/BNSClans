@@ -46,7 +46,7 @@ namespace ClanManager.Models
                                     succesZipped += 1;
                                 }
                             }
-                            catch(Exception e)
+                            catch
                             {
                                 unsuccesZipped += 1;
                                 //mostly catches 404 not found errors and sometime enumeration errors
@@ -69,6 +69,21 @@ namespace ClanManager.Models
                 e.ToString();
                 return false;
             }
+        }
+
+        public string GetUntilOrEmpty(string text, string stopAt)
+        {
+            if (!String.IsNullOrWhiteSpace(text))
+            {
+                int charLocation = text.IndexOf(stopAt, StringComparison.Ordinal);
+
+                if (charLocation > 0)
+                {
+                    return text.Substring(0, charLocation);
+                }
+            }
+
+            return String.Empty;
         }
     }
 }

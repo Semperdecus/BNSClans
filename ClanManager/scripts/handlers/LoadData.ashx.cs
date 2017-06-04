@@ -125,6 +125,8 @@ namespace ClanManager
                                                 "</td>" + "<td class=\"nodisplay\"> " +
                                                     databaseCharacter.ElementalDmgRate +
                                                 "</td>" + "<td class=\"nodisplay\"> " +
+                                                    databaseCharacter.usingElement +
+                                                "</td>" + "<td class=\"nodisplay\"> " +
                                                     databaseCharacter.Server +
                                                 "</td>" +
                                                 "<td> " +
@@ -134,7 +136,7 @@ namespace ClanManager
                             }
                             else
                             {
-                                Data.updateClan(databaseCharacter.Name.ToLower(), databaseCharacter.Clan.ToLower());
+                                Data.updateCharacterClan(databaseCharacter.Name.ToLower(), databaseCharacter.Clan.ToLower());
                             }
                         }
                         catch

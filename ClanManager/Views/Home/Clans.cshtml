@@ -1,19 +1,295 @@
 ﻿@model Character
 @using ClanManager.Models
 @{
+    Website w = new Website();
     ViewBag.Title = "Clans";
 }
+<div class="nav-left-bottom">
+    <a data-toggle="modal" data-target="#help" style="color: #4e4e4e"><div class="nav-title-small"><small>NEED HELP?</small></div></a>
 
-<h2>Clans</h2>
+</div>
 
+<div class="container-clanbanner">
 
+</div>
 @using (Html.BeginForm())
 {
-    <div class="title-text">
-        <h1>Search a clan</h1>
+    <div class="title-text-medium">
         <hr class="style11" />
         @Html.TextBoxFor(u => u.Name, new { @class = "search", placeholder = "Enter clanname here", maxlength = "24" })
         @Html.ValidationMessageFor(u => u.Name)
         <hr class="style11" />
     </div>
 }
+    <div class="container-bottom">
+        <div class="indent">
+            <h2>Top 10 Clans</h2>
+            <hr class="style12" />
+        </div>
+
+        <table class="numbertable">
+            <tbody>
+            @{for (int i = 1; i <= 10; i++)
+                {
+                    <tr>
+                        <td class="number">
+                            @if (i != 10)
+                            {
+                                <span>0</span><span>@i.ToString()</span>
+                            }
+                            else
+                            {
+                                <span>10</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+        <table class="table indentTable">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Highest Average AP</th>
+                    <th>Highest Average Level</th>
+                    <th>Highest Average Score</th>
+                    <th>Most True Souls</th>
+                    <th>Most Chokma Weapons</th>
+                </tr>
+            </thead>
+            <tbody>
+            @{ 
+                for(int i = 0; i < 10; i++)
+                {
+                    try
+                    {
+                <tr class="capitalize">
+                    <td width="2%"></td>
+                    <td width="20%">
+                        <a href="~/Clan/@w.GetUntilOrEmpty(Data.selectTop10Clan("averageAP", "", "10")[i], " -" )">
+                            @w.GetUntilOrEmpty(Data.selectTop10Clan("averageAP", "", "10")[i], " -")
+                        </a>
+                        <span class="right">@Data.selectTop10Clan("averageAP", "", "10")[i].Substring(Data.selectTop10Clan("averageAP", "", "10")[i].LastIndexOf('-') + 1)</span>
+                    </td>
+                    <td width="20%">
+                        <a href="~/Clan/@w.GetUntilOrEmpty(Data.selectTop10Clan("averageLevel", "", "10")[i], " -" )">
+                            @w.GetUntilOrEmpty(Data.selectTop10Clan("averageLevel", "", "10")[i], " -")
+                        </a> 
+                        <span class="right">@Data.selectTop10Clan("averageLevel", "", "10")[i].Substring(Data.selectTop10Clan("averageLevel", "", "10")[i].LastIndexOf('-') + 1)</span>
+                    </td>
+                    <td width="20%">
+                        <a href="~/Clan/@w.GetUntilOrEmpty(Data.selectTop10Clan("averageScore", "", "10")[i], " -" )">
+                            @w.GetUntilOrEmpty(Data.selectTop10Clan("averageScore", "", "10")[i], " -")
+                        </a> 
+                        <span class="right">@Data.selectTop10Clan("averageScore", "", "10")[i].Substring(Data.selectTop10Clan("averageScore", "", "10")[i].LastIndexOf('-') + 1)</span>
+                    </td>
+                    <td width="20%">
+                        <a href="~/Clan/@w.GetUntilOrEmpty(Data.selectTop10Clan("truesoulAmount", "", "10")[i], " -" )">
+                            @w.GetUntilOrEmpty(Data.selectTop10Clan("truesoulAmount", "", "10")[i], " -")
+                        </a> 
+                        <span class="right">@Data.selectTop10Clan("truesoulAmount", "", "10")[i].Substring(Data.selectTop10Clan("truesoulAmount", "", "10")[i].LastIndexOf('-') + 1)</span>
+                    </td>
+                    <td width="20%">
+                        <a href="~/Clan/@w.GetUntilOrEmpty(Data.selectTop10Clan("chokmaAmount", "", "10")[i], " -" )">
+                            @w.GetUntilOrEmpty(Data.selectTop10Clan("chokmaAmount", "", "10")[i], " -")
+                        </a> 
+                        <span class="right">@Data.selectTop10Clan("chokmaAmount", "", "10")[i].Substring(Data.selectTop10Clan("chokmaAmount", "", "10")[i].LastIndexOf('-') + 1)</span>
+                    </td>
+               </tr>
+                    }
+                    catch
+                    {
+                        //mostly index out of range if less than 10 records returned
+                    }
+                }
+            }
+            </tbody>
+        </table>
+        <br />
+        <div class="indent">
+            <h2>Clans By Server Group <small>with members</small></h2>
+            <hr class="style12" />
+            
+        </div>
+        <table class="numbertable">
+            <tbody>
+                @{for (int i = 1; i <= 10; i++)
+                    {
+                        <tr>
+                            <td class="number">
+                                @if (i != 10)
+                                {
+                                    <span>0</span><span>@i.ToString()</span>
+                                }
+                                else
+                                {
+                                    <span>10</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <table class="table indentTable">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th><span class="info" title="Windrest, Wild Springs, Highland Gate">Group 1</span></th>
+                    <th><span class="info" title="Cardinal Gates, Hao District, Greenhollow, Spirit’s Rest">Group 2</span></th>
+                    <th><span class="info" title="Starfall Crater, Ebon Hall, Angler’s Watch, Twin Wagons">Group 3</span></th>
+                    <th><span class="info" title="[DE] Frostgipfel, [DE] Bambusdorf">Group 4</span></th>
+                    <th><span class="info" title="[DE] Windweide, [DE] Himmelsfarm">Group 5</span></th>
+                    <th><span class="info" title="[FR] Dokumo, [FR] Ogong, [FR] Hogdonny">Group 6</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    for (int i = 0; i < 10; i++)
+                    {
+                        try
+                        {
+                            <tr class="capitalize">
+                                <td width="2%"></td>
+                                <td width="16.67%">
+                                    <a href="~/Clan/@w.GetUntilOrEmpty(Data.selectTop10Clan("members", "1", "10")[i], " -" )">
+                                        @w.GetUntilOrEmpty(Data.selectTop10Clan("members", "1", "10")[i], " -")
+                                    </a>
+                                    <span class="right">@Data.selectTop10Clan("members", "1", "10")[i].Substring(Data.selectTop10Clan("members", "1", "10")[i].LastIndexOf('-') + 1)</span>
+                                </td>
+                                <td width="16.67%">
+                                    <a href="~/Clan/@w.GetUntilOrEmpty(Data.selectTop10Clan("members", "2", "10")[i], " -" )">
+                                        @w.GetUntilOrEmpty(Data.selectTop10Clan("members", "2", "10")[i], " -")
+                                    </a>
+                                    <span class="right">@Data.selectTop10Clan("members", "2", "10")[i].Substring(Data.selectTop10Clan("members", "2", "10")[i].LastIndexOf('-') + 1)</span>
+                                </td>
+                                <td width="16.67%">
+                                    <a href="~/Clan/@w.GetUntilOrEmpty(Data.selectTop10Clan("members", "3", "10")[i], " -" )">
+                                        @w.GetUntilOrEmpty(Data.selectTop10Clan("members", "3", "10")[i], " -")
+                                    </a>
+                                    <span class="right">@Data.selectTop10Clan("members", "3", "10")[i].Substring(Data.selectTop10Clan("members", "3", "10")[i].LastIndexOf('-') + 1)</span>
+                                </td>
+                                <td width="16.67%">
+                                    <a href="~/Clan/@w.GetUntilOrEmpty(Data.selectTop10Clan("members", "4", "10")[i], " -" )">
+                                        @w.GetUntilOrEmpty(Data.selectTop10Clan("members", "4", "10")[i], " -")
+                                    </a>
+                                    <span class="right">@Data.selectTop10Clan("members", "4", "10")[i].Substring(Data.selectTop10Clan("members", "4", "10")[i].LastIndexOf('-') + 1)</span>
+                                </td>
+                                <td width="16.67%">
+                                    <a href="~/Clan/@w.GetUntilOrEmpty(Data.selectTop10Clan("members", "5", "10")[i], " -" )">
+                                        @w.GetUntilOrEmpty(Data.selectTop10Clan("members", "5", "10")[i], " -")
+                                    </a>
+                                    <span class="right">@Data.selectTop10Clan("members", "5", "10")[i].Substring(Data.selectTop10Clan("members", "5", "10")[i].LastIndexOf('-') + 1)</span>
+                                </td>
+                                <td width="16.67%">
+                                    <a href="~/Clan/@w.GetUntilOrEmpty(Data.selectTop10Clan("members", "6", "10")[i], " -" )">
+                                        @w.GetUntilOrEmpty(Data.selectTop10Clan("members", "6", "10")[i], " -")
+                                    </a>
+                                    <span class="right">@Data.selectTop10Clan("members", "6", "10")[i].Substring(Data.selectTop10Clan("members", "6", "10")[i].LastIndexOf('-') + 1)</span>
+                                </td>
+                            </tr>
+                        }
+                        catch
+                        {
+                            //mostly index out of range if less than 10 records returned
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+        <br/>
+        @*<div class="indent">
+            <h2>Help</h2>
+            <hr class="style12" />
+            <p>HOW DO I ADD NEW CLAN MEMBERS TO MY CLAN?</p>
+            <p>HOW DO I SORT TABLES hold shit+click to sort 2 tables</p>
+            <p>HOW DO I FILTER DATA</p>
+            <p>HOW DO I VIEW AVATARS</p>
+            <p>MY CLAN SHOULD BE IN THE TOP 10</p>
+            <p>NOT ALL DATA LOADED CORRECTLY</p>
+            <p>refreshing might help. Please report errors to me </p>
+        </div>*@
+        
+    </div>
+
+@*add members bootstrap modal*@
+<div class="modal fade" id="help" role="dialog">
+    <div class="modal-dialog modal-lg" style="width: 80%">
+        <div class="modal-content">
+            <!-- Modal content-->
+            <div class="modal-header noborder">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="container-box">
+                    <h2>Not everything loaded</h2>
+                    <hr class="style12" />
+                    <p>
+                        This has mostly to do with data that changed a lot (eg. members leaving or F2 page errors).
+                        This will slightly influence the clan stats as well. If you refresh the page you will see
+                        the table loads up properly and should have less empty table rows. If you have more questions
+                        or troubles then please contact me at [INSERT EMAIL and SOCIAL MEDIA ACCOUNTS].
+                    </p>
+                 </div>
+                <div class="container-box">
+                    <h2>Adding members</h2>
+                    <hr class="style12" />
+                    <p>
+                        You can add members to your clan by clicking the "add members" button on the bottom left of
+                        the clan page. You will see a popup open much like this one and a big textbox for you to write
+                        names in. You can instert multiple names at using by spliting them using enter.
+                    <p>
+                    <p>
+                        <strong>Note:</strong> it can take a while to process multiple names so please be patient.
+                    </p>
+                </div>
+                <div class="container-box">
+                    <h2>Where's my clan</h2>
+                    <hr class="style12" />
+                    <p>
+                        Clans are added to the database after it has been succesfully loaded at least once. If you
+                        search your clan and it returns a table with no errors it should automatically be added to the
+                        list. Only clans with more than 20 member can show up in the top 10 list.
+                    </p>
+                </div>
+                <div class="container-box">
+                    <h2>Filtering Data</h2>
+                    <hr class="style12" />
+                    <p>
+                        You can filter data by selcting the "filter columns" button on the bottom left of
+                        the clan page. You will see a popup open much like this one and a bunch of checkboxes.
+                        By checking and unchecking certain boxes you will automatically update the table in the
+                        background.
+                    </p>
+                </div>
+                <div class="container-box">
+                    <h2>How do I view avatars</h2>
+                    <hr class="style12" />
+                    <p>
+                        You can view avatars by selcting the "display avatars" button on the bottom left of
+                        the clan page. If you want to download all avatars you can press the small arrow down right
+                        next to it. It can take up to 1s per avatar to properly zip, depending on your internet
+                        connection. A zip file will be saved to @KnownFolders.GetPath(KnownFolder.Downloads) follow
+                        by the clan name.
+                    </p>
+                </div>
+                <div class="container-box">
+                    <h2>Sorting Tables</h2>
+                    <hr class="style12" />
+                    <p>
+                        You can sort certain tables by clicking the header. Please note that sorting only works after the
+                        whole table has been loaded. There's a yellow bar on the top of the page to indicate the progress.
+                    </p>
+                    <p>
+                        <strong>Tip:</strong> you can sort multiple columns by holding down shift while clicking a header.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer noborder">
+            </div>
+            
+        </div>
+
+    </div>
+</div>
