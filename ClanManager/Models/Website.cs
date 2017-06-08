@@ -4,6 +4,8 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace ClanManager.Models
@@ -85,5 +87,50 @@ namespace ClanManager.Models
 
             return String.Empty;
         }
+
+        public void BulkInsertMillionNames(string rawText)
+        {
+            string[] namesArray = rawText.Split(
+                new string[] { "\r\n" }, StringSplitOptions.None);
+            int resultAdded = 0;
+            int resultnotAdded = 0;
+
+            int threadSize = namesArray.Length / 5000;
+            
+            List<string> list_names = new List<string>(namesArray);
+            Parallel.ForEach(list_names, name =>
+            {
+                Character newMember = Data.getAllPlayerDataTrimmed(name);
+                if (newMember != null)
+                {
+                    //try to add player
+                    if (Data.addMember(newMember.Name, newMember.Clan) == true && newMember.Clan.ToLower() == Data.selectedClan.Name.ToLower())
+                    {
+                        resultAdded += 1;
+                    }
+                    //if player is already in database update their clan
+                    else if (Data.addMember(newMember.Name, newMember.Clan) == false)
+                    {
+                        if (Data.updateCharacterClan(newMember.Name, newMember.Clan) == true)
+                        {
+                            resultAdded += 1;
+                        }
+                        else
+                        {
+                            resultnotAdded += 1;
+                        }
+                    }
+                    else
+                    {
+                        resultnotAdded += 1;
+                    }
+                }
+                else
+                {
+                    resultnotAdded += 1;
+                }
+            });
+        }
+
     }
 }

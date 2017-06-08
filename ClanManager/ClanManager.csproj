@@ -209,6 +209,7 @@
   <ItemGroup>
     <Compile Include="Models\CharacterRawJSONData.cs" />
     <Compile Include="Models\KnownFolders.cs" />
+    <Compile Include="Models\ThreadPool.cs" />
     <Compile Include="Models\Website.cs" />
     <Compile Include="scripts\handlers\ClanSummaryData.ashx.cs">
       <DependentUpon>ClanSummaryData.ashx</DependentUpon>
@@ -252,6 +253,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Clan\ClanOverview.cshtml" />
     <Content Include="Views\Home\Clans.cshtml" />
+    <Content Include="Views\Home\Insert.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

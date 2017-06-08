@@ -74,5 +74,26 @@ namespace ClanManager.Controllers
 
         }
 
+        // GET: Clan/Name
+        public ActionResult Insert(string id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Insert(Character newmembers)
+        {
+            website = new Website();
+
+            string rawText = newmembers.Name;
+
+            string[] partsFromString = rawText.Split(
+                new string[] { "\r\n" }, StringSplitOptions.None);
+
+            website.BulkInsertMillionNames(rawText);
+
+            return View();
+            //Nog toevoegen: viewbag meegeven hoeveel toegevoegd/veranderd
+        }
     }
 }

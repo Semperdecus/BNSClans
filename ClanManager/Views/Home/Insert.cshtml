@@ -1,0 +1,21 @@
+﻿@model Character
+@using ClanManager.Models
+
+@{
+    ViewBag.Title = "Insert";
+}
+<div class="container">
+    <h2>Insert</h2>
+    @using (Html.BeginForm())
+    {
+        <p>
+            With this you can insert many names at once. (faster)
+        </p>
+        <p><strong>Note:</strong> it can take a while to process multiple names so please be patient.</p>
+        @Html.TextAreaFor(model => model.Name, new { @class = "form-control textarea-big" })
+        @Html.ValidationMessageFor(model => model.Name)
+        <input type="submit" class="btn btn-primary" value="Submit" />
+
+    }
+
+</div>

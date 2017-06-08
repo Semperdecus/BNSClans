@@ -325,17 +325,22 @@ namespace ClanManager.Models
             {
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    cmd.Parameters.Add(new SqlParameter("newClanQuery", newClan));
-                    cmd.Parameters.Add(new SqlParameter("nameQuery", name));
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    if (newClan != null && name != null)
                     {
-                        while(reader.Read())
+                        cmd.Parameters.Add(new SqlParameter("newClanQuery", newClan));
+                        cmd.Parameters.Add(new SqlParameter("nameQuery", name));
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            return true;
+                            while (reader.Read())
+                            {
+                                return true;
+                            }
+                            return false;
                         }
-                        return false;
                     }
+                    else
+                        return false;
                 }
             }
         }
