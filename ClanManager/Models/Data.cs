@@ -18,6 +18,7 @@ namespace ClanManager.Models
         public static Clan selectedClan = new Clan();
         //private static readonly string DatabaseString = "Server=mssql.fhict.local;Database=dbi340015;User Id=dbi340015;Password=qw12QW!@;";
         private static readonly string DatabaseString = "Data Source=TERROG;Initial catalog=BNSCharacters;Integrated Security=true";
+        //private static readonly string DatabaseString = "Server=tcp:bnsclans.database.windows.net,1433;Initial Catalog=BNSClans;Persist Security Info=False;User ID=semperdickus;Password=qw12QW!@;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
         private static string urlMain = "http://eu-bns.ncsoft.com/ingame/bs/character/profile?c="; //get link
         private static string urlEquipment = "http://eu-bns.ncsoft.com/ingame/bs/character/data/equipments?c="; //equipment link
@@ -541,5 +542,86 @@ namespace ClanManager.Models
                 }
             }
         }
+
+        public static List<Clan> getAllClans(string server, string topX)
+        {
+            List<Clan> returnClanList = new List<Clan>();
+            string query = "SELECT top (" + topX + ") * FROM CLAN WHERE serverGroup LIKE '%" + server + "%' AND name NOT LIKE '%placeholder %' ORDER BY name";
+
+            using (SqlConnection conn = Data.Connection)
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    try
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                string clanname = reader["name"].ToString();
+                                int amountMembers = Convert.ToInt32(reader["members"]);
+                                double averageAP = Convert.ToDouble(reader["averageAP"]);
+                                double averageLevel = Convert.ToDouble(reader["averageLevel"]);
+                                double averageScore = Convert.ToDouble(reader["averageScore"]);
+                                int truesouls = Convert.ToInt32(reader["truesoulAmount"]);
+                                int chokmas = Convert.ToInt32(reader["chokmaAmount"]);
+                                int summoners = Convert.ToInt32(reader["summoners"]);
+                                int forceMasters = Convert.ToInt32(reader["forceMasters"]);
+                                int destroyers = Convert.ToInt32(reader["destroyers"]);
+                                int bladeMasters = Convert.ToInt32(reader["bladeMasters"]);
+                                int bladeDancers = Convert.ToInt32(reader["bladeDancers"]);
+                                int assassins = Convert.ToInt32(reader["assassins"]);
+                                int soulFighters = Convert.ToInt32(reader["soulFighters"]);
+                                int warlocks = Convert.ToInt32(reader["warlocks"]);
+                                int kfms = Convert.ToInt32(reader["kungFuMasters"]);
+                                string serverGroup = reader["serverGroup"].ToString();
+
+                                Clan newClan = new Clan(clanname, amountMembers, averageAP, averageLevel, averageScore, truesouls, chokmas,
+                                    summoners, forceMasters, destroyers, bladeMasters, bladeDancers, assassins, kfms, soulFighters, warlocks,
+                                    serverGroup);
+
+                                returnClanList.Add(newClan);
+                            }
+
+                            return returnClanList;
+                        }
+                    }
+                    catch
+                    {
+                        throw new Exception("Error collecting data.");
+                    }
+                }
+            }
+        }
+
+        public static List<string> getAllNamesFromDatabase()
+        {
+            List<string> returnList = new List<string>();
+            string query = "SELECT name FROM Character";
+
+            using (SqlConnection conn = Data.Connection)
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    try
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                returnList.Add(reader["name"].ToString());
+                            }
+
+                            return returnList;
+                        }
+                    }
+                    catch
+                    {
+                        throw new Exception("Error collecting data.");
+                    }
+                }
+            }
+        }
+
     }
 }

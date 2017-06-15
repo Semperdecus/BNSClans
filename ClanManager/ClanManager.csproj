@@ -159,6 +159,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Global.asax" />
+    <Content Include="images\arrow.png" />
     <Content Include="images\class_icons\bd.png" />
     <Content Include="images\class_icons\bm.png" />
     <Content Include="images\class_icons\des.png" />
@@ -192,6 +193,8 @@
     <Content Include="App_Code\LoadMemberCount.ashx" />
     <Content Include="scripts\handlers\ReturnRows.ashx" />
     <Content Include="scripts\handlers\ClanSummaryData.ashx" />
+    <None Include="Properties\PublishProfiles\BNSClans - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\BNSClans - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\VenusCheapHositng.pubxml" />
     <Content Include="scripts\handlers\SharedHandler.ashx" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
@@ -202,11 +205,13 @@
     <Content Include="scripts\modernizr-2.6.2.js" />
     <Content Include="scripts\pageLoadReset.js" />
     <Content Include="scripts\randomsplash.js" />
+    <Content Include="scripts\scriptsClans.js" />
     <Content Include="scripts\scripts.js" />
     <Content Include="scripts\tablesort.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ClansController.cs" />
     <Compile Include="Models\CharacterRawJSONData.cs" />
     <Compile Include="Models\KnownFolders.cs" />
     <Compile Include="Models\ThreadPool.cs" />
@@ -254,6 +259,7 @@
     <Content Include="Views\Clan\ClanOverview.cshtml" />
     <Content Include="Views\Home\Clans.cshtml" />
     <Content Include="Views\Home\Insert.cshtml" />
+    <Content Include="Views\Clans\ClansOverview.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -69,8 +69,8 @@ namespace ClanManager
                                     returnRowNumber = rowNumber.ToString();
                                 }
                                 //write row to page
-                                row = "<tr class=\"tablerow\"><td class=\"number sorter-false\"> " +
-                                                "</td><td> " +
+                                row = "<tr class=\"tablerow\"><td class=\"number sorter-false\" width=\"2%\"> " +
+                                                "</td><td width=\"14%\"> " +
                                                     "<a href=\"http://eu-bns.ncsoft.com/ingame/bs/character/profile?c=" + databaseCharacter.Name + "\"  onclick=\"window.open('http://eu-bns.ncsoft.com/ingame/bs/character/profile?c=" + databaseCharacter.Name + "', 'newwindow', 'width=1100, height=800'); return false; \">" + databaseCharacter.Name + "</a>" +
                                                     
                                                     //"<a href=\"/Profile/" + databaseCharacter.Name + "\">" + databaseCharacter.Name + "</a>" +

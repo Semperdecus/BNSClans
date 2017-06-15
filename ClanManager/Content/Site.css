@@ -118,6 +118,7 @@ p {
 }
 
 .nav-left{
+    z-index: 10;
     width: 200px;
     height: 100%;
     background: #e7e7ee;
@@ -177,7 +178,7 @@ p {
 
 
 .loading{
-    z-index: 5;
+    z-index: 55;
     top:-1px;
     position:absolute;
     height: 3px;
@@ -251,6 +252,10 @@ p {
     border-right: 1px solid black;
     border-bottom: 1px solid black;
 }
+
+.dbstatus{
+    font-size: 14px;
+}
 .container-dbstatus{
     /*text for wheter clan entry was updated in database CURRENTLY REMOVED*/
     position: absolute;
@@ -265,8 +270,8 @@ p {
     margin-left: 200px;
     width: calc(100% - 200px);
     height: 100%;
-    /*background-image: url('../images/splash4.jpg');
-    background-image: url('../images/theVideoGameGallery_12497_5374x2856.jpg');
+    background-image: url('../images/splash4.jpg');
+    /*background-image: url('../images/theVideoGameGallery_12497_5374x2856.jpg');
     background-image: url('../images/theVideoGameGallery_12494_2500x1553.jpg');
     background-image: url('../images/theVideoGameGallery_12492_2500x1572.jpg');
     background-image: url('../images/theVideoGameGallery_12491_3000x1643.jpg');
@@ -339,7 +344,40 @@ textarea {
     margin-top: 150px;
     cursor: default;
 }
-
+.title-text-sub {
+    margin-right: auto;
+    margin-left: auto;
+    width: 475px;
+    height: 50px;
+    cursor: default;
+}
+.arrow{
+    text-indent: 0px;
+    height: 56px;
+    text-shadow: 1px 1px 1px #000000, -1px -1px 1px #000000, 1px -1px 1px #000000, -1px 1px 1px #000000;
+    font-family: Oswald-Regular;
+    background: none;
+    border: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    background-image: url('../images/arrow.png');
+    background-repeat: no-repeat;
+    background-size: 48px, 48px;
+    background-position-y: 4px;
+    cursor: text;
+    transition: 0.2s;
+}
+.arrow2{
+    position:absolute;
+    background: none;
+    height: 56px;
+    border: none;
+    cursor: pointer;
+    cursor: text;
+    margin-left: -475px;
+    margin-top: -8px;
+    width: 48px;
+}
 h1{
     line-height: 60px;
     letter-spacing: 0px;
@@ -347,6 +385,29 @@ h1{
     font-family: Oswald-Regular;
     text-transform: uppercase;
     color: white;
+    text-shadow: 1px 1px 1px #000000, -1px -1px 1px #000000, 1px -1px 1px #000000, -1px 1px 1px #000000;
+}
+.h6{
+    width: 475px;
+    position: fixed;
+    letter-spacing: 0px;
+    font-size: 48px;
+    font-family: Oswald-Regular;
+    text-transform: uppercase;
+    color: white;
+    padding-left: 56px;
+    margin-left: 0px;
+    text-shadow: 1px 1px 1px #000000, -1px -1px 1px #000000, 1px -1px 1px #000000, -1px 1px 1px #000000;
+    transition: 0.2s;
+}
+.h6:hover{
+    width: 475px;
+    position: fixed;
+    text-indent: 12px;
+    font-size: 48px;
+    font-family: Oswald-Regular;
+    text-transform: uppercase;
+    color: #fff666;
     text-shadow: 1px 1px 1px #000000, -1px -1px 1px #000000, 1px -1px 1px #000000, -1px 1px 1px #000000;
 }
 hr.style11 {
@@ -465,6 +526,7 @@ hr.style12 {
 }
 
 .nav-left-bottom{
+    z-index: 11;
     width: 200px;
     background: #e7e7ee;
     position: fixed;
@@ -473,6 +535,7 @@ hr.style12 {
 }
 
 .nav-title-small{
+    z-index: 11;
     width: 100%;
     background: transparent;
     font-family: 'Segoe UI';
@@ -486,6 +549,7 @@ hr.style12 {
 }
 
 .nav-title-small:hover{
+    z-index: 11;
     width: 100%;
     background: #f6f6f6;
     text-indent: 12%;

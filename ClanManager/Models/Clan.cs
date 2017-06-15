@@ -11,7 +11,6 @@ namespace ClanManager.Models
     {
         public string Name { get; set; }
         public List<Character> Members { get; set; }
-        public string clanName { get; set; }
         public double averageAP { get; set; }
         public double averageLevel { get; set; }
         public double averageScore { get; set; }
@@ -40,6 +39,29 @@ namespace ClanManager.Models
 
         }
 
+
+        public Clan(string name, int members, double averageAP, double averageLevel, double averageScore, int truesouls, int chokmas, 
+            int summoners, int forceMasters, int destroyers, int bladeMasters, int bladeDancers, int assassins, int kungFuMasters, int soulFighters,
+            int warlocks, string server)
+        {
+            this.Name = name;
+            this.memberAmount = members;
+            this.averageAP = averageAP;
+            this.averageLevel = averageLevel;
+            this.averageScore = averageScore;
+            this.truesoulAmount = truesouls;
+            this.chokmaAmount = chokmas;
+            this.summoners = summoners;
+            this.forceMasters = forceMasters;
+            this.destroyers = destroyers;
+            this.bladeDancers = bladeDancers;
+            this.bladeMasters = bladeMasters;
+            this.assassins = assassins;
+            this.kungFuMasters = kungFuMasters;
+            this.soulFighters = soulFighters;
+            this.warlocks = warlocks;
+            this.server = server;
+        }
         public double AverageAP(List<Character> members)
         {
             double result = 0.00;

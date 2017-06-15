@@ -29,6 +29,7 @@
         <a href="~/Home/Index"><div class="nav-title @(ViewContext.RouteData.Values["Action"].ToString() == "Index" && 
             ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")">Home</div></a>
         <a href="~/Home/Clans"><div class="nav-title @(ViewContext.RouteData.Values["Controller"].ToString() == "Clan" || 
+            ViewContext.RouteData.Values["Controller"].ToString() == "Clans" ||
             ViewContext.RouteData.Values["Action"].ToString() == "Clans" && ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")">Clans</div></a>
         <a href="~/Home/About"><div class="nav-title @(ViewContext.RouteData.Values["Action"].ToString() == "About" ? "active" : "")">About</div></a>
 

@@ -24,10 +24,15 @@ namespace ClanManager
                  defaults: new { controller = "Profile", action = "ProfileOverview", id = UrlParameter.Optional });
 
             routes.MapRoute(
+                name: "ClansLookup",
+                url: "Clans/{id}",
+                defaults: new { controller = "Clans", action = "ClansOverview", id = UrlParameter.Optional });
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });
+
 
 
         }

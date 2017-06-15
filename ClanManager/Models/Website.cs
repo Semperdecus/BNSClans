@@ -95,25 +95,33 @@ namespace ClanManager.Models
             int resultAdded = 0;
             int resultnotAdded = 0;
 
+            List<string> databaseNames = Data.getAllNamesFromDatabase();
             int threadSize = namesArray.Length / 5000;
             
             List<string> list_names = new List<string>(namesArray);
             Parallel.ForEach(list_names, name =>
             {
-                Character newMember = Data.getAllPlayerDataTrimmed(name);
-                if (newMember != null)
+                if (!databaseNames.Contains(name))
                 {
-                    //try to add player
-                    if (Data.addMember(newMember.Name, newMember.Clan) == true && newMember.Clan.ToLower() == Data.selectedClan.Name.ToLower())
+                    Character newMember = Data.getAllPlayerDataTrimmed(name);
+                    if (newMember != null)
                     {
-                        resultAdded += 1;
-                    }
-                    //if player is already in database update their clan
-                    else if (Data.addMember(newMember.Name, newMember.Clan) == false)
-                    {
-                        if (Data.updateCharacterClan(newMember.Name, newMember.Clan) == true)
+                        //try to add player
+                        if (Data.addMember(newMember.Name, newMember.Clan) == true)
                         {
                             resultAdded += 1;
+                        }
+                        //if player is already in database update their clan
+                        else if (Data.addMember(newMember.Name, newMember.Clan) == false)
+                        {
+                            if (Data.updateCharacterClan(newMember.Name, newMember.Clan) == true)
+                            {
+                                resultAdded += 1;
+                            }
+                            else
+                            {
+                                resultnotAdded += 1;
+                            }
                         }
                         else
                         {
@@ -125,12 +133,7 @@ namespace ClanManager.Models
                         resultnotAdded += 1;
                     }
                 }
-                else
-                {
-                    resultnotAdded += 1;
-                }
             });
         }
-
     }
 }

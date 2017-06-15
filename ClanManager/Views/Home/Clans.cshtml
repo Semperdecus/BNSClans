@@ -5,6 +5,7 @@
     ViewBag.Title = "Clans";
 }
 <div class="nav-left-bottom">
+    <a href="~/Clans/"><div class="nav-title-small"><small>Show all Clans</small></div></a>
     <a data-toggle="modal" data-target="#help" style="color: #4e4e4e"><div class="nav-title-small"><small>NEED HELP?</small></div></a>
 
 </div>
@@ -196,21 +197,30 @@
                         }
                     }
                 }
+                @*<tr class="capitalize">
+                    <td width="2%"></td>
+                    <td width="16.67%">
+                        <a><small>More...</small></a>
+                    </td>
+                    <td width="16.67%">
+                        <a>More...</a>
+                    </td>
+                    <td width="16.67%">
+                        <a>More...</a>
+                    </td>
+                    <td width="16.67%">
+                        <a>More...</a>
+                    </td>
+                    <td width="16.67%">
+                        <a>More...</a>
+                    </td>
+                    <td width="16.67%">
+                        <a>More...</a>
+                    </td>
+                </tr>*@
             </tbody>
         </table>
-        <br/>
-        @*<div class="indent">
-            <h2>Help</h2>
-            <hr class="style12" />
-            <p>HOW DO I ADD NEW CLAN MEMBERS TO MY CLAN?</p>
-            <p>HOW DO I SORT TABLES hold shit+click to sort 2 tables</p>
-            <p>HOW DO I FILTER DATA</p>
-            <p>HOW DO I VIEW AVATARS</p>
-            <p>MY CLAN SHOULD BE IN THE TOP 10</p>
-            <p>NOT ALL DATA LOADED CORRECTLY</p>
-            <p>refreshing might help. Please report errors to me </p>
-        </div>*@
-        
+        <br/>        
     </div>
 
 @*add members bootstrap modal*@
@@ -229,7 +239,8 @@
                         This has mostly to do with data that changed a lot (eg. members leaving or F2 page errors).
                         This will slightly influence the clan stats as well. If you refresh the page you will see
                         the table loads up properly and should have less empty table rows. If you have more questions
-                        or troubles then please contact me at [INSERT EMAIL and SOCIAL MEDIA ACCOUNTS].
+                        or troubles then please contact me at <a href="https://www.reddit.com/message/compose/?to=Morning_Woody">Reddit</a>,
+                        Discord (Semperdickus#0316), or in-game "Semperdickus" (EU).
                     </p>
                  </div>
                 <div class="container-box">

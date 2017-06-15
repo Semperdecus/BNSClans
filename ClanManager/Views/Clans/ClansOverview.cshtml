@@ -1,0 +1,225 @@
+﻿@model Character
+@using ClanManager.Models
+@{
+    ViewBag.Title = "Clans";
+    //get selected clan by reading url
+    string selectedServer = Request.Url.ToString().Split('/').Last();
+    List<Clan> clans = new List<Clan>();
+    if (selectedServer != null)
+    {
+        clans = Data.getAllClans(selectedServer, "200");
+    }
+    else
+    {
+        clans = Data.getAllClans("", "200");
+    }
+}
+<div class="loading" id="loading"></div>
+
+<div class="nav-left-bottom">
+    <a data-toggle="modal" data-target="#serverGroup" style="color: #4e4e4e"><div class="nav-title-small"><small>Filter by server</small></div></a>
+    <a data-toggle="modal" data-target="#displayedData" style="color: #4e4e4e"><div class="nav-title-small"><small>Filter columns</small></div></a>
+</div>
+
+<div class="container" id="memberData">
+    <div class="container-dbstatus">
+        <small><span id="dataBaseStatus"></span></small>
+    </div>
+    <div class="general-data">
+        <h2>Clans</h2>
+        <hr class="style12" />
+        <p>
+            Total Clans: @Data.getAllClans("", "99999").Count
+        </p>
+            <a href="~/Clans/Group 1"><div style="width: 100%;"><small>[EU] Group 1 - Windrest, Wild Springs, Highland Gate</small></div></a>
+            <a href="~/Clans/Group 2"><div style="width: 100%;"><small>[EU] Group 2 - Cardinal Gates, Hao District, Greenhollow, Spirit’s Rest</small></div></a>
+            <a href="~/Clans/Group 3"><div style="width: 100%;"><small>[EU] Group 3 - Starfall Crater, Ebon Hall, Angler’s Watch, Twin Wagons</small></div></a>
+            <a href="~/Clans/Group 4"><div style="width: 100%;"><small>[EU] Group 4 - [DE] Frostgipfel, [DE] Bambusdorf</small></div></a>
+            <a href="~/Clans/Group 5"><div style="width: 100%;"><small>[EU] Group 5 - [DE] Windweide, [DE] Himmelsfarm</small></div></a>
+            <a href="~/Clans/Group 6"><div style="width: 100%;"><small>[EU] Group 6 - [FR] Dokumo, [FR] Ogong, [FR] Hogdonny</small></div></a>
+    </div>
+    <table id="numberTable" class="numbertable">
+        @{for (int i = 1; i <= clans.Count; i++)
+            {
+                <tr>
+                    <td class="number">
+                        @if (i < 10)
+                        {
+                            <span>00</span><span>@i.ToString()</span>
+                        }
+                        else if (i < 100 && i >= 10)
+                        {
+                            <span>0</span><span>@i.ToString()</span>
+                        }
+                        else if (i >= 100)
+                        {
+                            <span>@i.ToString()</span>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <table id="clanTable" class="tablesorter table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Members</th>
+                <th>Average AP</th>
+                <th>Average Level</th>
+                <th>Average Score</th>
+                <th>True Souls</th>
+                <th>Chokma Weapons</th>
+                <th class="nodisplay">Server</th>
+                <th class="nodisplay">Assassins</th>
+                <th class="nodisplay">Blade Dancers</th>
+                <th class="nodisplay">Blade Masters</th>
+                <th class="nodisplay">Destroyers</th>
+                <th class="nodisplay">Force Masters</th>
+                <th class="nodisplay">Kung Fu Masters</th>
+                <th class="nodisplay">Soul Fighters</th>
+                <th class="nodisplay">Summoner</th>
+                <th class="nodisplay">Warlocks</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach(Clan c in clans) {
+                <tr>
+                    <td style="width: 2%"></td>
+                    <td class="capitalize" style="width: 15%"><a href="~/Clan/@c.Name">@c.Name</a></td>
+                    <td style="width: 10%">@c.memberAmount</td>
+                    <td style="width: 10%">@c.averageAP</td>
+                    <td style="width: 10%">@c.averageLevel</td>
+                    <td style="width: 10%">@c.averageScore</td>
+                    <td style="width: 10%">@c.truesoulAmount</td>
+                    <td style="width: 10%">@c.chokmaAmount</td>
+                    <td class="nodisplay" style="width: 50%">@c.server</td>
+                    <td class="nodisplay" style="width: 10%">@c.assassins</td>
+                    <td class="nodisplay" style="width: 10%">@c.bladeDancers</td>
+                    <td class="nodisplay" style="width: 10%">@c.bladeMasters</td>
+                    <td class="nodisplay" style="width: 10%">@c.destroyers</td>
+                    <td class="nodisplay" style="width: 10%">@c.forceMasters</td>
+                    <td class="nodisplay" style="width: 10%">@c.kungFuMasters</td>
+                    <td class="nodisplay" style="width: 10%">@c.soulFighters</td>
+                    <td class="nodisplay" style="width: 10%">@c.summoners</td>
+                    <td class="nodisplay" style="width: 10%">@c.warlocks</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@*display data bootstrap modal*@
+<div class="modal fade" id="displayedData" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal content-->
+            @using (Html.BeginForm())
+            {
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h2 class="modal-title">Select Displayed Data</h2>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        You can select which data you want to have displayed by checking the checkboxes below
+                    </p>
+                    <div class="row" id="checkboxes">
+                        <div class="col-md-5">
+                            <p>
+                                <input type="checkbox" id="default" checked="checked" value="2" /> Members
+                            </p>
+                            <p>
+                                <input type="checkbox" id="default" checked="checked" value="3" /> Average Attack Power
+                            </p>
+                            <p>
+                                <input type="checkbox" id="default" checked="checked" value="4" /> Average Level
+                            </p>
+                            <p>
+                                <input type="checkbox" id="default" checked="checked" value="5" /> Average Score
+                            </p>
+                            <p>
+                                <input type="checkbox" id="default" checked="checked" value="6" /> Amount of True Souls
+                            </p>
+                            <p>
+                                <input type="checkbox" id="default" checked="checked" value="7" /> Amount of Raven Weapons
+                            </p>
+                            <p>
+                                <input type="checkbox" value="8" /> Server
+                            </p>
+                        </div>
+                        <div class="col-md-5">
+                            <p>
+                                <input type="checkbox" value="9" /> Assassins
+                            </p>
+                            <p>
+                                <input type="checkbox" value="10" /> Blade Dancers
+                            </p>
+                            <p>
+                                <input type="checkbox" value="11" /> Blade Masters
+                            </p>
+                            <p>
+                                <input type="checkbox" value="12" /> Destroyers
+                            </p>
+                            <p>
+                                <input type="checkbox" value="13" /> Force Masters
+                            </p>
+                            <p>
+                                <input type="checkbox" value="14" /> Kung Fu Masters
+                            </p>
+                            <p>
+                                <input type="checkbox" value="15" /> Soul Fighters
+                            </p>
+                            <p>
+                                <input type="checkbox" value="16" /> Summoners
+                            </p>
+                            <p>
+                                <input type="checkbox" value="17" /> Warlocks
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@*display data bootstrap modal*@
+<div class="modal fade" id="serverGroup" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal content-->
+            @using (Html.BeginForm())
+            {
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h2 class="modal-title">Select Clans from Server</h2>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Show clans only from a certain server group by following the link below.
+                    </p>
+                    <a href="~/Clans/Group 1"><div class="nav-title-small" style="width: 100%;"><small>[EU] Group 1 - Windrest, Wild Springs, Highland Gate</small></div></a>
+                    <a href="~/Clans/Group 2"><div class="nav-title-small" style="width: 100%;"><small>[EU] Group 2 - Cardinal Gates, Hao District, Greenhollow, Spirit’s Rest</small></div></a>
+                    <a href="~/Clans/Group 3"><div class="nav-title-small" style="width: 100%;"><small>[EU] Group 3 - Starfall Crater, Ebon Hall, Angler’s Watch, Twin Wagons</small></div></a>
+                    <a href="~/Clans/Group 4"><div class="nav-title-small" style="width: 100%;"><small>[EU] Group 4 - [DE] Frostgipfel, [DE] Bambusdorf</small></div></a>
+                    <a href="~/Clans/Group 5"><div class="nav-title-small" style="width: 100%;"><small>[EU] Group 5 - [DE] Windweide, [DE] Himmelsfarm</small></div></a>
+                    <a href="~/Clans/Group 6"><div class="nav-title-small" style="width: 100%;"><small>[EU] Group 6 - [FR] Dokumo, [FR] Ogong, [FR] Hogdonny</small></div></a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/scripts/scriptsClans.js"></script>
+}
