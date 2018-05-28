@@ -1,6 +1,5 @@
-# BNSClans
 
-**Note from the Author:** BNSClans is deprecated. To look up clans in Blade & Soul you can use this alternative: https://bnstools.info/ 
+# **Note from the Author:** BNSClans is deprecated. To look up clans in Blade & Soul you can use this alternative: https://bnstools.info/ 
 
 ## What is BNSClans
 BNSClans (name not final) is a website for players in the MMORPG "Blade & Soul". It's designed to make it easier for players to organize their clans, a feature which is slightly lacking in-game.
