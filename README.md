@@ -5,8 +5,9 @@ Demo:
 
 ## Used technologies
 -	ASP.net: web framework
--	JavaScript: dynamic web pages
+-	JQuery/ajax: dynamic web pages
 -	MSSQL database
+-   NuGet: package manager
 
 ## Other
 -   Batch inserts & handling over 1 million rows
