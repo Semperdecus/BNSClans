@@ -9,8 +9,7 @@ Demo:
 -	MSSQL database
 -   NuGet: package manager
 
-## Other
+## Learned
 -   Batch inserts & handling over 1 million rows
 -   MVC architecture
 -   Research: UX and UI design
-    
