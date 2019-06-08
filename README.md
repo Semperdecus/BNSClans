@@ -1,4 +1,4 @@
-Note: website is no longer online
+*Note: website is no longer online
 
 ## What is BNSClans
 BNSClans is a website for players in the MMORPG "Blade & Soul". It's designed to make it easier for players to organize their clans, a feature which is lacking in-game.
