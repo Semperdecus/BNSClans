@@ -14,4 +14,8 @@ Demo:
 -   MVC architecture
 -   Research: UX and UI design
 
+
+## Architecture and research
+For more information see the [Related Document](https://github.com/Semperdecus/BNSClans/blob/master/docs/) (Dutch)
+
 ![homepage](https://github.com/Semperdecus/BNSClans/blob/master/docs/homepage.png)
