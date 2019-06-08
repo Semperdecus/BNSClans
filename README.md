@@ -13,3 +13,5 @@ Demo:
 -   Batch inserts & handling over 1 million rows
 -   MVC architecture
 -   Research: UX and UI design
+
+![homepage](https://github.com/Semperdecus/BNSClans/blob/master/docs/homepage.png)
